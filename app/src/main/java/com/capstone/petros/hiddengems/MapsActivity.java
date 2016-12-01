@@ -52,13 +52,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-
-        String name= marker.getTitle();
-
-//        if (name.equalsIgnoreCase("My Spot"))
-//        {
-//            //write your code here
-//        }
         Log.i(TAG, "Tapped marker");
 
         Intent intent  = new Intent(MapsActivity.this, GemInfoActivity.class);
