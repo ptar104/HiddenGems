@@ -11,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -70,8 +71,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Mckeldin and move the camera
         LatLng mcK = new LatLng(38.985910, -76.945281);
-        mMap.addMarker(new MarkerOptions().position(mcK).title("The library"));
+        mMap.addMarker(new MarkerOptions().position(mcK).title("The library").icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mcK));
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mcK, 18.0f));
     }
 
     @Override
