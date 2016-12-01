@@ -70,7 +70,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerClickListener(this);
 
         // Add a marker in Mckeldin and move the camera
-        LatLng mcK = new LatLng(38.985910, -76.945281);
+        LatLng mcK = new LatLng(38.991090, -76.934092); // Static hard-coded "Ike's pizza"
         mMap.addMarker(new MarkerOptions().position(mcK).title("The library").icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mcK));
 
