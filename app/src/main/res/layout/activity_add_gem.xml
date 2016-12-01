@@ -90,8 +90,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkBox4"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:buttonTint="@color/colorPrimary"
+                    android:textColor="?attr/colorButtonNormal"
+                    app:buttonTint="?attr/colorButtonNormal"
                     android:layout_weight="0.05" />
 
                 <CheckBox
@@ -99,8 +99,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkBox6"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:buttonTint="@color/colorPrimary"
+                    android:textColor="?attr/colorButtonNormal"
+                    app:buttonTint="?attr/colorButtonNormal"
                     android:layout_weight="0.04" />
 
                 <CheckBox
@@ -108,16 +108,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkBox7"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:buttonTint="@color/colorPrimary" />
+                    android:textColor="?attr/colorButtonNormal"
+                    app:buttonTint="?attr/colorButtonNormal" />
 
                 <CheckBox
                     android:text="Other"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/checkBox8"
-                    android:textColor="@color/colorPrimaryDark"
-                    app:buttonTint="@color/colorPrimary"
+                    android:textColor="?attr/colorButtonNormal"
+                    app:buttonTint="?attr/colorButtonNormal"
                     android:layout_weight="0.05" />
 
             </LinearLayout>
