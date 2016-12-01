@@ -69,9 +69,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
 
-        // Add a marker in Mckeldin and move the camera
+        // Add a marker in Ike's Pizza and move the camera
         LatLng mcK = new LatLng(38.991090, -76.934092); // Static hard-coded "Ike's pizza"
-        mMap.addMarker(new MarkerOptions().position(mcK).title("The library").icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
+        mMap.addMarker(new MarkerOptions().position(mcK).title("Ike's Pizza").icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mcK));
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mcK, 18.0f));
