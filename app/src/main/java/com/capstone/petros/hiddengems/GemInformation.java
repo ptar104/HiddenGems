@@ -30,6 +30,18 @@ public class GemInformation {
         category = Category.RESTAURANT;
     }
 
+    // Constructor to set rating, review, description, category
+    public GemInformation(int rating, String review, String description, Category category) {
+        this.rating = rating;
+        this.avgRating = rating;
+        ratingList = new ArrayList<>();
+        ratingList.add(rating);
+        reviews = new ArrayList<>();
+        reviews.add(review);
+        setDescription(description);
+        setCategory(category);
+    }
+
     // Rating added to arraylist and avg rating recalculated.
     public void addRating(int num) {
         // Num based on onTouch rating of user
