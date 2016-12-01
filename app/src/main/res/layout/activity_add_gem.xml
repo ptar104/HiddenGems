@@ -55,7 +55,7 @@
                 app:srcCompat="@drawable/pizza1"
                 android:layout_marginLeft="56dp"
                 android:layout_marginStart="56dp"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:id="@+id/imageView4"
                 android:layout_height="150dp"
                 android:layout_width="150dp"
@@ -65,7 +65,7 @@
 
             <ImageView
                 app:srcCompat="@drawable/pizza2"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:id="@+id/imageView3"
                 android:layout_height="150dp"
                 android:layout_width="150dp"
