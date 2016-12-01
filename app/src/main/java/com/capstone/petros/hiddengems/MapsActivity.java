@@ -1,18 +1,23 @@
 package com.capstone.petros.hiddengems;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
+
+    final private String TAG = "MapsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +42,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setOnMarkerClickListener(this);
 
         // Add a marker in Mckeldin and move the camera
         LatLng mcK = new LatLng(38.985910, -76.945281);
         mMap.addMarker(new MarkerOptions().position(mcK).title("The library"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(mcK));
+    }
+
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        String name= marker.getTitle();
+
+//        if (name.equalsIgnoreCase("My Spot"))
+//        {
+//            //write your code here
+//        }
+        Log.i(TAG, "Tapped marker");
+
+        Intent intent  = new Intent(MapsActivity.this, GemInfoActivity.class);
+
+        startActivity(intent);
+
+        return true;
     }
 }
