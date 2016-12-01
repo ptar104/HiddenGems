@@ -25,12 +25,14 @@
             android:textColor="#FFFFFFFF"
             />
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="5dp"
             android:scaleX="-1"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            app:srcCompat="@android:drawable/ic_media_play"
+            android:id="@+id/detailsBackButton"
+            android:background="@android:color/transparent" />
 
     </RelativeLayout>
 
@@ -211,7 +213,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Navigate"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:id="@+id/detailsNavigateButton" />
 
             </RelativeLayout>
 
