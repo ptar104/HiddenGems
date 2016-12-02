@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class AddGemActivity extends AppCompatActivity {
 
@@ -29,8 +30,12 @@ public class AddGemActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Validate form and save new object, pass back as parcelable
 
+                final TextView description = (TextView)findViewById(R.id.gemDescription);
+
                 Intent data = new Intent();
 
+                GemInformation gem = new GemInformation(0, "", description.getText(), GemInformation.Category
+                category);
                 setResult(RESULT_OK, data);
                 finish();
             }

@@ -1,5 +1,6 @@
 package com.capstone.petros.hiddengems;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -17,21 +18,21 @@ public class GemInformation {
     ArrayList<Integer> ratingList;
     ArrayList<String> reviews;
     String description;
-    Category category;
+    ArrayList<Category> category;
 
 
     // Constructor
     public GemInformation() {
         rating = 0;
         avgRating = 0;
-        ratingList = new ArrayList<>();
-        reviews = new ArrayList<>();
+        ratingList = new ArrayList<Integer>();
+        reviews = new ArrayList<String>();
         description = "";
-        category = Category.RESTAURANT;
+        category = new ArrayList<Category>();
     }
 
     // Constructor to set rating, review, description, category
-    public GemInformation(int rating, String review, String description, Category category) {
+    public GemInformation(int rating, String review, String description, ArrayList<Category> category) {
         this.rating = rating;
         this.avgRating = rating;
         ratingList = new ArrayList<>();
@@ -76,7 +77,7 @@ public class GemInformation {
     }
 
     // Set category of Gem
-    public void setCategory(Category category) {
+    public void setCategory(ArrayList<Category> category) {
         this.category = category;
     }
 
