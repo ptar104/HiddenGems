@@ -33,12 +33,14 @@ public class AddGemActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Validate form and save new object, pass back as parcelable
 
+                final EditText gemName = (EditText)findViewById(R.id.addGemName);
                 final EditText description = (EditText)findViewById(R.id.addGemDescription);
 
                 Intent data = new Intent();
 
                 GemInformation gem = new GemInformation();
 
+                gem.setTitle(gemName.getText().toString());
                 gem.setDescription(description.getText().toString());
 
                 Log.i(TAG, gem.toString());

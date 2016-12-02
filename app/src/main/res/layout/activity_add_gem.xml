@@ -48,8 +48,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="5">
+            android:layout_height="187dp">
 
             <ImageView
                 app:srcCompat="@drawable/pizza1"
@@ -74,70 +73,47 @@
                 android:layout_toEndOf="@+id/imageView4"
                 android:layout_marginLeft="9dp"
                 android:layout_marginStart="9dp" />
+
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="62dp"
             android:orientation="vertical"
-            android:background="#FFFFFFFF">
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/common_google_signin_btn_text_dark_default"
+            android:weightSum="1">
 
             <TextView
+                android:text="What is the name of the gem?"
+                android:layout_marginLeft="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="What type of gem is this?"
-                android:textColor="#FF000000"
-                android:gravity="center"
-                android:textAlignment="viewStart"
-                android:textStyle="normal|bold"
-                android:layout_marginLeft="5dp" />
+                android:layout_height="25dp"
+                android:id="@+id/textView2"
+                android:textColor="@android:color/black"
+                android:textStyle="normal|bold" />
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <CheckBox
-                    android:text="Restaurant"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox4"
-                    android:textColor="?attr/colorButtonNormal"
-                    app:buttonTint="?attr/colorButtonNormal"
-                    android:layout_weight="0.05" />
-
-                <CheckBox
-                    android:text="Historic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox6"
-                    android:textColor="?attr/colorButtonNormal"
-                    app:buttonTint="?attr/colorButtonNormal"
-                    android:layout_weight="0.04" />
-
-                <CheckBox
-                    android:text="Entertainment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox7"
-                    android:textColor="?attr/colorButtonNormal"
-                    app:buttonTint="?attr/colorButtonNormal" />
-
-                <CheckBox
-                    android:text="Other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/checkBox8"
-                    android:textColor="?attr/colorButtonNormal"
-                    app:buttonTint="?attr/colorButtonNormal"
-                    android:layout_weight="0.05" />
-
-            </LinearLayout>
-
-
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/addGemName"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray"
+                android:layout_weight="0.58"
+                android:layout_marginTop="0dp" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="5" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,6 +129,71 @@
                 android:layout_width="match_parent"
                 android:layout_height="59dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="62dp"
+                    android:orientation="vertical"
+                    android:background="#FFFFFFFF"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignParentBottom="true">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:text="What type of gem is this?"
+                        android:textColor="#FF000000"
+                        android:gravity="center"
+                        android:textAlignment="viewStart"
+                        android:textStyle="normal|bold"
+                        android:layout_marginLeft="5dp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <CheckBox
+                            android:text="Restaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/checkBox4"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal"
+                            android:layout_weight="0.05" />
+
+                        <CheckBox
+                            android:text="Historic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/checkBox6"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal"
+                            android:layout_weight="0.04" />
+
+                        <CheckBox
+                            android:text="Entertainment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/checkBox7"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal" />
+
+                        <CheckBox
+                            android:text="Other"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/checkBox8"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal"
+                            android:layout_weight="0.05" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
             </RelativeLayout>
 
             <LinearLayout
@@ -161,7 +202,8 @@
                 android:layout_height="98dp"
                 android:background="@android:color/background_light"
                 android:layout_marginLeft="0dp"
-                android:layout_marginRight="0dp">
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:text="Write a description..."
@@ -188,7 +230,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.94" />
+                android:layout_weight="0.38" />
 
             <Button
                 android:text="SUBMIT GEM"
