@@ -13,12 +13,13 @@ public class GemInformation {
         RESTAURANT, HISTORIC, ENTERTAINMENT, OTHER
     }
 
-    int rating;
-    double avgRating;
-    ArrayList<Integer> ratingList;
-    ArrayList<String> reviews;
-    String description;
-    ArrayList<Category> category;
+    private int rating;
+    private double avgRating;
+    private ArrayList<Integer> ratingList;
+    private ArrayList<String> reviews;
+    private String description;
+    private ArrayList<Category> category;
+    private String gemName;
 
 
     // Constructor
@@ -51,6 +52,11 @@ public class GemInformation {
         updateRating();
     }
 
+    // Updates gem name
+    public void setTitle(String title) {
+        this.gemName = title;
+    }
+
     // Updates avg rating
     public void updateRating() {
         avgRating = rating / ratingList.size();
@@ -81,4 +87,8 @@ public class GemInformation {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "Gem Title: \"" + this.gemName +  "\"\nGem description: \"" +  this.description + "\"";
+    }
 }

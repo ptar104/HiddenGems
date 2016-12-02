@@ -4,12 +4,15 @@ import android.content.Intent;
 import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class AddGemActivity extends AppCompatActivity {
+    private String TAG = "AddGemActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +33,16 @@ public class AddGemActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Validate form and save new object, pass back as parcelable
 
-                final TextView description = (TextView)findViewById(R.id.gemDescription);
+                final EditText description = (EditText)findViewById(R.id.addGemDescription);
 
                 Intent data = new Intent();
 
-                GemInformation gem = new GemInformation(0, "", description.getText(), GemInformation.Category
-                category);
+                GemInformation gem = new GemInformation();
+
+                gem.setDescription(description.getText().toString());
+
+                Log.i(TAG, gem.toString());
+
                 setResult(RESULT_OK, data);
                 finish();
             }

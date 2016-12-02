@@ -177,7 +177,7 @@
                     android:layout_height="match_parent"
                     android:inputType="textMultiLine"
                     android:ems="10"
-                    android:id="@+id/editText"
+                    android:id="@+id/addGemDescription"
                     android:background="@android:color/darker_gray"
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="10dp"
