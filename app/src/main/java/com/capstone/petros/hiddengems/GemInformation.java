@@ -1,5 +1,8 @@
 package com.capstone.petros.hiddengems;
 
+import android.text.format.Time;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -12,26 +15,30 @@ public class GemInformation {
         RESTAURANT, HISTORIC, ENTERTAINMENT, OTHER
     }
 
-    int rating;
-    double avgRating;
-    ArrayList<Integer> ratingList;
-    ArrayList<String> reviews;
-    String description;
-    Category category;
+    private int rating;
+    private double avgRating;
+    private ArrayList<Integer> ratingList;
+    private ArrayList<String> reviews;
+    private String description;
+    private ArrayList<Category> category;
+    private String gemName;
+    private Time timeCreated;
 
 
     // Constructor
     public GemInformation() {
-        rating = 0;
-        avgRating = 0;
-        ratingList = new ArrayList<>();
-        reviews = new ArrayList<>();
-        description = "";
-        category = Category.RESTAURANT;
+        this.rating = 0;
+        this.avgRating = 0;
+        this.ratingList = new ArrayList<Integer>();
+        this.reviews = new ArrayList<String>();
+        this.description = "";
+        this.category = new ArrayList<Category>();
+        this.timeCreated = new Time();
+        this.timeCreated.setToNow();
     }
 
     // Constructor to set rating, review, description, category
-    public GemInformation(int rating, String review, String description, Category category) {
+    public GemInformation(int rating, String review, String description, ArrayList<Category> category) {
         this.rating = rating;
         this.avgRating = rating;
         ratingList = new ArrayList<>();
@@ -48,6 +55,11 @@ public class GemInformation {
         rating += num;
         ratingList.add(num);
         updateRating();
+    }
+
+    // Updates gem name
+    public void setTitle(String title) {
+        this.gemName = title;
     }
 
     // Updates avg rating
@@ -76,8 +88,12 @@ public class GemInformation {
     }
 
     // Set category of Gem
-    public void setCategory(Category category) {
+    public void setCategory(ArrayList<Category> category) {
         this.category = category;
     }
 
+    @Override
+    public String toString() {
+        return "Gem Title: \"" + this.gemName +  "\"\nGem description: \"" +  this.description + "\"";
+    }
 }

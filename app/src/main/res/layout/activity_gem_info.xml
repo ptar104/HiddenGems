@@ -20,17 +20,18 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="Ike's Pizza"
             android:textSize="40dp"
             android:textColor="#FFFFFFFF"
-            />
+            android:text="IKE'S PIZZA" />
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="5dp"
             android:scaleX="-1"
-            app:srcCompat="@android:drawable/ic_media_play" />
+            app:srcCompat="@android:drawable/ic_media_play"
+            android:id="@+id/detailsBackButton"
+            android:background="@android:color/transparent" />
 
     </RelativeLayout>
 
@@ -44,17 +45,35 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="5">
+            android:orientation="horizontal"
+            android:layout_weight="5"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="IMAGES GO IN HERE!!!"
-                android:textSize="40dp"
-                android:textColor="#FFFF0000"
-                android:textAlignment="center"
-                android:layout_centerInParent="true"/>
+            <ImageView
+                app:srcCompat="@drawable/pizza1"
+                android:scaleType="center"
+                android:id="@+id/imageView2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="75dp"
+                android:layout_marginStart="75dp" />
 
+            <ImageView
+                app:srcCompat="@drawable/pizza2"
+                android:scaleType="center"
+                android:id="@+id/imageView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_alignTop="@+id/imageView2"
+                android:layout_toRightOf="@+id/imageView2"
+                android:layout_toEndOf="@+id/imageView2"
+                android:layout_marginLeft="19dp"
+                android:layout_marginStart="19dp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -211,7 +230,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Navigate"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:id="@+id/detailsNavigateButton" />
 
             </RelativeLayout>
 
