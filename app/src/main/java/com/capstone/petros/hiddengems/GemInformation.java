@@ -1,5 +1,7 @@
 package com.capstone.petros.hiddengems;
 
+import android.text.format.Time;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -20,16 +22,19 @@ public class GemInformation {
     private String description;
     private ArrayList<Category> category;
     private String gemName;
+    private Time timeCreated;
 
 
     // Constructor
     public GemInformation() {
-        rating = 0;
-        avgRating = 0;
-        ratingList = new ArrayList<Integer>();
-        reviews = new ArrayList<String>();
-        description = "";
-        category = new ArrayList<Category>();
+        this.rating = 0;
+        this.avgRating = 0;
+        this.ratingList = new ArrayList<Integer>();
+        this.reviews = new ArrayList<String>();
+        this.description = "";
+        this.category = new ArrayList<Category>();
+        this.timeCreated = new Time();
+        this.timeCreated.setToNow();
     }
 
     // Constructor to set rating, review, description, category
