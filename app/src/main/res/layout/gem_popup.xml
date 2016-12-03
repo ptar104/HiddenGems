@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gem_popup"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E5FFFFFF"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:weightSum="1">
+
+        <Button
+            android:text="X"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:id="@+id/button"
+            android:layout_gravity="right"
+            android:onClick="onButtonClickClose"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ike's Pizza"
+            android:id="@+id/titleText" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$$ --- .1 mi"
+            android:id="@+id/subTitleText" />
+
+        <Button
+            android:text="More"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/moreButton"
+            android:onClick="onMoreInfoClick"/>
+    </LinearLayout>
+
+</RelativeLayout>
