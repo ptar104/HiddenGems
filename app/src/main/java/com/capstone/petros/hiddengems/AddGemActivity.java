@@ -72,8 +72,6 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
                 Intent result = new Intent();
 
-
-
                 String title = gemName.getText().toString();
                 String descriptionText = description.getText().toString();
 
