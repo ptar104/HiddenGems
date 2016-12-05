@@ -32,6 +32,10 @@ public class GemInfoActivity extends AppCompatActivity {
         // Initialize currGem reference
         currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
 
+        // Populate reviews
+        reviews.addAll(currGem.getReviews());
+        mAdapter.notifyDataSetChanged();
+
         final ImageButton backButton = (ImageButton)findViewById(R.id.detailsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
