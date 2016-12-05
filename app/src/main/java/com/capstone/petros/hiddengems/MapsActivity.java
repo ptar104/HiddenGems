@@ -148,6 +148,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 "20 years", categories, 38.985910, -76.943);
 
         gem.setGemName("Ike's Pizza");
+        gem.addReview("Better than my mom's food");
+        gem.addReview("You HAVE to check out this place.");
+        gem.addReview("#tbt Napoli");
+
         Log.i(TAG, "Initialized Ike's with" +  gem.getLocation());
         this.gems.add(gem);
 

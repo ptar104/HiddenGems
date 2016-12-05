@@ -45,15 +45,14 @@ public class GemInfoActivity extends AppCompatActivity {
         mAdapter.notifyDataSetChanged();
 
 //        //Update the UI...
-//        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
-//        title.setText(gem.getGemName());
+        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
+        title.setText(currGem.getGemName());
 //        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
 //        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
 //                                                        // AND CALCULATE DISTANCE.
-//        TextView reviews = (TextView)findViewById(R.id.textViewNumberOfGems);
 //        reviews.setText(gem.getRating()+" gems / 5 gems"); // TODO: Update with images.
-//        TextView description = (TextView)findViewById(R.id.textViewDescription);
-//        description.setText(gem.getDescription());
+        TextView description = (TextView)findViewById(R.id.textViewDescription);
+        description.setText(currGem.getDescription());
 
         final ImageButton backButton = (ImageButton)findViewById(R.id.detailsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
