@@ -15,20 +15,20 @@ import java.util.ArrayList;
 
 public class GemInformation implements Serializable {
 
-    public enum Category {
+    public enum Category implements Serializable {
         RESTAURANT, HISTORIC, ENTERTAINMENT, OTHER
     }
 
-    private int rating;
-    private double avgRating;
-    private ArrayList<Integer> ratingList;
-    private ArrayList<String> reviews;
-    private String description;
-    private ArrayList<Category> category;
-    private String gemName;
-    private Time timeCreated;
-    private LatLng location;
-
+    private int rating; // Constantly updated total sum of all ratings based on number of gems
+    private double avgRating; // rating/ratingList.size()
+    private ArrayList<Integer> ratingList; // All rating values
+    private ArrayList<String> reviews;  // All review descriptions - Not sparse, so not 1:1, but our reviews list only shows review explanations, not number of gems so it's fine.
+    private String description; // Gem description - singular.
+    private ArrayList<Category> category; // Array of Category enums as defined above
+    private String gemName; // Name of gem
+//    private Time timeCreated; // To keep track of shiny gems and its expirations
+    private Double latitude; // Decided to use LatLng instead of Location because that's what we get back from Places API
+    private Double longitude;
 
     // Constructor
     public GemInformation() {
@@ -38,13 +38,15 @@ public class GemInformation implements Serializable {
         this.reviews = new ArrayList<String>();
         this.description = "";
         this.category = new ArrayList<Category>();
-        this.timeCreated = new Time();
-        this.timeCreated.setToNow();
-        this.location = null;
+//        this.timeCreated = new Time();
+//        this.timeCreated.setToNow();
+//        this.location = null;
+        this.latitude = 0.0;
+        this.longitude = 0.0;
     }
 
     // Constructor to set rating, review, description, category
-    public GemInformation(int rating, String review, String description, ArrayList<Category> category, LatLng location) {
+    public GemInformation(int rating, String review, String description, ArrayList<Category> category, Double latitude, Double longitude) {
         this.rating = rating;
         this.avgRating = rating;
         this.ratingList = new ArrayList<>();
@@ -53,7 +55,8 @@ public class GemInformation implements Serializable {
         this.reviews.add(review);
         this.setDescription(description);
         this.setCategory(category);
-        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     // Rating added to arraylist and avg rating recalculated.
@@ -103,12 +106,13 @@ public class GemInformation implements Serializable {
         this.category = category;
     }
 
-    public void setLocation(LatLng location) {
-        this.location = location;
+    public void setLocation(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public LatLng getLocation() {
-        return this.location;
+        return new LatLng(this.latitude, this.longitude);
     }
 
     @Override

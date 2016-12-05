@@ -81,7 +81,7 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
                 gem.setGemName(title);
                 gem.setDescription(descriptionText);
-                gem.setLocation(place.getLatLng());
+                gem.setLocation(place.getLatLng().latitude, place.getLatLng().longitude);
 
                 Log.i(TAG, gem.toString());
 

@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
@@ -29,6 +31,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     final private String TAG = "MapsActivity";
 
     PopupWindow _popupWindow;
+    ArrayList<GemInformation> gems = new ArrayList<GemInformation>(); // Temporary datastore for all gems - not persistent
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Notify data changed, update map
             GemInformation newGem = (GemInformation)data.getSerializableExtra("newGem");
             LatLng newGemLocation = newGem.getLocation();
+
+            this.gems.add(newGem);
 
             mMap.addMarker(new MarkerOptions().position(newGemLocation).title(newGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem))); // TODO: Change to shiny gem up until createdTime reaches x seconds
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
@@ -110,6 +115,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMoreInfoClick(View v) {
         Intent intent  = new Intent(MapsActivity.this, GemInfoActivity.class);
 
+
+        // TODO: Determine which gem is clicked - may be a costly process of iterating through all existing gems and finding a matching location
         startActivity(intent);
     }
 
