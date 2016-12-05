@@ -49,7 +49,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, AddGemActivity.class);
-
                 startActivityForResult(intent, CREATE_GEM);
             }
         });
@@ -87,23 +86,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
 
-        // Add a marker in Ike's Pizza and move the camera
-        LatLng mcK = new LatLng(38.991090, -76.934092); // Static hard-coded "Ike's pizza"
-        mMap.addMarker(new MarkerOptions().position(mcK).title("Ike's Pizza").icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(mcK));
-
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mcK, 18.0f));
+        initDemoGems();
     }
 
     @Override
     public boolean onMarkerClick(final Marker marker) {
-        Log.i(TAG, "Tapped marker");
-
+        Log.i(TAG, "Tapped marker with location: " + marker.getPosition()); // TODO: Decide whether we want this approach or assign UUID to each gem and add to marker as tag
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext()
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = layoutInflater.inflate(R.layout.gem_popup, null);
         _popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        // Set position as tag on moreInfoButton
+        Button moreInfoButton = (Button) popupView.findViewById(R.id.moreButton);
+        moreInfoButton.setTag(marker.getPosition());
 
         // Need a view as an anchor- was button before, not sure how to use Marker
         View map = findViewById(R.id.map);
@@ -115,12 +112,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMoreInfoClick(View v) {
         Intent intent  = new Intent(MapsActivity.this, GemInfoActivity.class);
 
+        LatLng gemLocation = (LatLng) v.getTag();
+
+        Log.i(TAG, "Got LatLng: " + gemLocation);
+        // Find matching gem
+        GemInformation match = null;
+        for (GemInformation currGem : this.gems) {
+            Log.i(TAG, currGem.getGemName() + currGem.getLocation());
+            if (currGem.getLocation().toString().compareTo(gemLocation.toString()) == 0) { // Match found
+                Log.i(TAG, "Match found: " + currGem.getGemName());
+                match = currGem;
+                break;
+            }
+        }
+
+        if (match != null) {
+            intent.putExtra("currGem", match);
+            startActivity(intent);
+        }
 
         // TODO: Determine which gem is clicked - may be a costly process of iterating through all existing gems and finding a matching location
-        startActivity(intent);
+
     }
 
     public void onButtonClickClose(View v) {
         _popupWindow.dismiss();
+    }
+
+    public void initDemoGems() {
+        // Spawn Ike's Pizza Gem
+        ArrayList<GemInformation.Category> categories = new ArrayList<>();
+        categories.add(GemInformation.Category.RESTAURANT);
+
+        GemInformation gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
+                "20 years", categories, 38.985910, -76.943);
+
+        gem.setGemName("Ike's Pizza");
+        Log.i(TAG, "Initialized Ike's with" +  gem.getLocation());
+        this.gems.add(gem);
+
+        for (GemInformation currGem : this.gems) {
+            mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
+            // Add a marker in Ike's Pizza and move the camera
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(currGem.getLocation()));
+        }
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(this.gems.get(0).getLocation(), 18.0f)); // Show Ike's
     }
 }

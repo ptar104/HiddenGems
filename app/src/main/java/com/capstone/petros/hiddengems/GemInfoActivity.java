@@ -38,32 +38,28 @@ public class GemInfoActivity extends AppCompatActivity {
         currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
 
         // Populate reviews
-        reviews.addAll(currGem.getReviews());
+        if (currGem.getReviews().size() > 0) {
+            reviews.addAll(currGem.getReviews());
+        }
+
         mAdapter.notifyDataSetChanged();
 
-
-        // Spawn Ike's Pizza Gem
-        ArrayList<GemInformation.Category> al = new ArrayList<>();
-        al.add(GemInformation.Category.RESTAURANT);
-        GemInformation gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
-                "20 years", al, 38.985910, -76.943);
-        gem.setGemName("Ike's Pizza");
-
-        //Update the UI...
-        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
-        title.setText(gem.getGemName());
-        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
-        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
-                                                        // AND CALCULATE DISTANCE.
-        TextView reviews = (TextView)findViewById(R.id.textViewNumberOfGems);
-        reviews.setText(gem.getRating()+" gems / 5 gems"); // TODO: Update with images.
-        TextView description = (TextView)findViewById(R.id.textViewDescription);
-        description.setText(gem.getDescription());
+//        //Update the UI...
+//        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
+//        title.setText(gem.getGemName());
+//        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
+//        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
+//                                                        // AND CALCULATE DISTANCE.
+//        TextView reviews = (TextView)findViewById(R.id.textViewNumberOfGems);
+//        reviews.setText(gem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+//        TextView description = (TextView)findViewById(R.id.textViewDescription);
+//        description.setText(gem.getDescription());
 
         final ImageButton backButton = (ImageButton)findViewById(R.id.detailsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                setResult(RESULT_CANCELED);
                 finish();
             }
         });
