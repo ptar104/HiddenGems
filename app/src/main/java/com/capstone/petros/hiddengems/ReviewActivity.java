@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -16,10 +17,14 @@ import android.widget.Toast;
 public class ReviewActivity extends AppCompatActivity {
     int selectedRating = 0; // Default value so it can be distinguished
 
+    EditText userReview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+
+        userReview = (EditText)findViewById(R.id.userReview);
 
         // Gem images
         final ImageView gemRating1 = (ImageView)findViewById(R.id.gemRating1);
@@ -63,8 +68,6 @@ public class ReviewActivity extends AppCompatActivity {
             }
         });
 
-        // Fetch current object
-
         final ImageButton backButton = (ImageButton)findViewById(R.id.addGemBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +87,21 @@ public class ReviewActivity extends AppCompatActivity {
                     return;
                 }
 
-                // Attach updated object and reviews separately
+                if (userReview.getText().toString() == "") {
+                    Toast.makeText(ReviewActivity.this, "Please write a review first.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Fetch current gem object
+                GemInformation currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
+
+                // Update existing gem
+                currGem.addRating(selectedRating);
+                currGem.addReview(userReview.getText().toString());
+
+                // Prepare result
                 Intent data = new Intent();
-                data.putExtra("newReview", "Better than my mom's cooking");
+                data.putExtra("updatedGem", currGem);
                 setResult(RESULT_OK, data);
                 finish();
             }
