@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import android.net.Uri;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class GemInfoActivity extends AppCompatActivity {
     ListView reviewsList;
     final int CREATE_REVIEW = 828;
     GemInformation currGem = null;
+    GemInformation updatedGem = null; // Temporary datastore for gems with added reviews, to update gem if user returns to main map view
     ArrayAdapter mAdapter;
     ArrayList<String> reviews = new ArrayList<String>();
 
@@ -58,8 +60,7 @@ public class GemInfoActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_CANCELED);
-                finish();
+                returnWithUpdatedGem();
             }
         });
 
@@ -76,7 +77,7 @@ public class GemInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GemInfoActivity.this, ReviewActivity.class);
-
+                intent.putExtra("currGem", currGem);
                 startActivityForResult(intent, CREATE_REVIEW);
             }
         });
@@ -91,16 +92,32 @@ public class GemInfoActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        returnWithUpdatedGem();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CREATE_REVIEW && resultCode == RESULT_OK) {
-            GemInformation updatedGem = (GemInformation)data.getSerializableExtra("updatedGem");
+            updatedGem = (GemInformation)data.getSerializableExtra("updatedGem");
 
             int numReviews = updatedGem.getReviews().size();
             String newReview = updatedGem.getReviews().get(numReviews - 1); // Index should never be out of bounds because at least one review exists
             reviews.add(newReview);
             mAdapter.notifyDataSetChanged();
             Toast.makeText(this, "New review: " + newReview, Toast.LENGTH_SHORT).show();
+
+            // Add review for gem
         }
+    }
+
+    // Menu back or regular back button pressed
+    public void returnWithUpdatedGem() {
+        Intent data = new Intent();
+        data.putExtra("updatedGem", (Serializable) updatedGem); // May be null, will be checked in MapsActivity
+        setResult(RESULT_CANCELED, data);
+        finish();
     }
 }

@@ -68,6 +68,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions().position(newGemLocation).title(newGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem))); // TODO: Change to shiny gem up until createdTime reaches x seconds
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newGemLocation, 18.0f));
+        } else if (resultCode == RESULT_CANCELED) {
+            GemInformation updatedGem = (GemInformation) data.getSerializableExtra("updatedGem");
+            if (updatedGem != null) {
+                 // TODO: update correct gem
+            }
         }
     }
 
