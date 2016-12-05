@@ -1,7 +1,11 @@
 package com.capstone.petros.hiddengems;
 
+import android.location.Location;
 import android.text.format.Time;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -9,7 +13,7 @@ import java.util.ArrayList;
  * Created by simon on 11/30/16.
  */
 
-public class GemInformation {
+public class GemInformation implements Serializable {
 
     public enum Category {
         RESTAURANT, HISTORIC, ENTERTAINMENT, OTHER
@@ -23,6 +27,7 @@ public class GemInformation {
     private ArrayList<Category> category;
     private String gemName;
     private Time timeCreated;
+    private LatLng location;
 
 
     // Constructor
@@ -35,18 +40,20 @@ public class GemInformation {
         this.category = new ArrayList<Category>();
         this.timeCreated = new Time();
         this.timeCreated.setToNow();
+        this.location = null;
     }
 
     // Constructor to set rating, review, description, category
-    public GemInformation(int rating, String review, String description, ArrayList<Category> category) {
+    public GemInformation(int rating, String review, String description, ArrayList<Category> category, LatLng location) {
         this.rating = rating;
         this.avgRating = rating;
-        ratingList = new ArrayList<>();
-        ratingList.add(rating);
-        reviews = new ArrayList<>();
-        reviews.add(review);
-        setDescription(description);
-        setCategory(category);
+        this.ratingList = new ArrayList<>();
+        this.ratingList.add(rating);
+        this.reviews = new ArrayList<>();
+        this.reviews.add(review);
+        this.setDescription(description);
+        this.setCategory(category);
+        this.location = location;
     }
 
     // Rating added to arraylist and avg rating recalculated.
@@ -58,8 +65,12 @@ public class GemInformation {
     }
 
     // Updates gem name
-    public void setTitle(String title) {
+    public void setGemName(String title) {
         this.gemName = title;
+    }
+
+    public String getGemName() {
+        return this.gemName;
     }
 
     // Updates avg rating
@@ -90,6 +101,14 @@ public class GemInformation {
     // Set category of Gem
     public void setCategory(ArrayList<Category> category) {
         this.category = category;
+    }
+
+    public void setLocation(LatLng location) {
+        this.location = location;
+    }
+
+    public LatLng getLocation() {
+        return this.location;
     }
 
     @Override

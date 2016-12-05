@@ -1,6 +1,7 @@
 package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,8 +56,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_OK) {
+        if (requestCode == CREATE_GEM && resultCode == RESULT_OK) {
             // Notify data changed, update map
+            GemInformation newGem = (GemInformation)data.getSerializableExtra("newGem");
+            LatLng newGemLocation = newGem.getLocation();
+
+            mMap.addMarker(new MarkerOptions().position(newGemLocation).title(newGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem))); // TODO: Change to shiny gem up until createdTime reaches x seconds
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newGemLocation, 18.0f));
         }
     }
 

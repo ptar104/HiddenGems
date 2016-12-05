@@ -2,6 +2,7 @@ package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
 import android.media.Image;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+
+import java.io.Serializable;
 
 public class AddGemActivity extends AppCompatActivity implements OnConnectionFailedListener {
     private String TAG = "AddGemActivity";
@@ -69,14 +72,20 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
                 Intent result = new Intent();
 
+
+
+                String title = gemName.getText().toString();
+                String descriptionText = description.getText().toString();
+
                 GemInformation gem = new GemInformation();
 
-                gem.setTitle(gemName.getText().toString());
-                gem.setDescription(description.getText().toString());
+                gem.setGemName(title);
+                gem.setDescription(descriptionText);
+                gem.setLocation(place.getLatLng());
 
                 Log.i(TAG, gem.toString());
 
-//                result.put("newGem", gem);
+                result.putExtra("newGem", (Serializable) gem);
 
                 setResult(RESULT_OK, result);
                 finish();

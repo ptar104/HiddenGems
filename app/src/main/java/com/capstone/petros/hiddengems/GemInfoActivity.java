@@ -41,6 +41,5 @@ public class GemInfoActivity extends AppCompatActivity {
                 startActivityForResult(intent, CREATE_REVIEW);
             }
         });
-
     }
 }
