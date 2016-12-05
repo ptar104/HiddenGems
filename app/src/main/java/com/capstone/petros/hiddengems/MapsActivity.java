@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupWindow;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +26,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     final int CREATE_GEM = 1337;
 
     final private String TAG = "MapsActivity";
+
+    PopupWindow _popupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +87,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public boolean onMarkerClick(final Marker marker) {
         Log.i(TAG, "Tapped marker");
 
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.gem_popup, null);
+        _popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        // Need a view as an anchor- was button before, not sure how to use Marker
+        View map = findViewById(R.id.map);
+        _popupWindow.showAsDropDown(map, 50, -20);
+
+        return true;
+    }
+
+    public void onMoreInfoClick(View v) {
         Intent intent  = new Intent(MapsActivity.this, GemInfoActivity.class);
 
         startActivity(intent);
+    }
 
-        return true;
+    public void onButtonClickClose(View v) {
+        _popupWindow.dismiss();
     }
 }
