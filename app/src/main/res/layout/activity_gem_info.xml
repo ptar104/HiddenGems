@@ -22,7 +22,8 @@
             android:layout_centerVertical="true"
             android:textSize="40dp"
             android:textColor="#FFFFFFFF"
-            android:text="IKE'S PIZZA" />
+            android:id="@+id/textViewGemTitle"
+            android:text="..." />
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -54,7 +55,7 @@
             <ImageView
                 app:srcCompat="@drawable/pizza1"
                 android:scaleType="center"
-                android:id="@+id/imageView2"
+                android:id="@+id/imageView1"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerVertical="true"
@@ -66,12 +67,12 @@
             <ImageView
                 app:srcCompat="@drawable/pizza2"
                 android:scaleType="center"
-                android:id="@+id/imageView"
+                android:id="@+id/imageView2"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_alignTop="@+id/imageView2"
-                android:layout_toRightOf="@+id/imageView2"
-                android:layout_toEndOf="@+id/imageView2"
+                android:layout_alignTop="@+id/imageView1"
+                android:layout_toRightOf="@+id/imageView1"
+                android:layout_toEndOf="@+id/imageView1"
                 android:layout_marginLeft="19dp"
                 android:layout_marginStart="19dp" />
         </RelativeLayout>
@@ -93,18 +94,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Casual Pizza - $$ - .1 mi"
+                    android:text="..."
                     android:textColor="#FF000000"
                     android:gravity="center"
-                    />
+                    android:id="@+id/textViewQuickInfo" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="NUMBER OF GEMS GOES HERE..."
+                    android:text="..."
                     android:textColor="#FF000000"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:id="@+id/textViewNumberOfGems"/>
             </LinearLayout>
 
             <TextView
@@ -114,10 +116,11 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="5dp"
-                android:text="Ike's pizza has been a standby in DC for over 20 years"
+                android:text="..."
                 android:textColor="#FF000000"
                 android:textAlignment="center"
-                android:gravity="top"/>
+                android:gravity="top"
+                android:id="@+id/textViewDescription"/>
 
 
 
@@ -165,56 +168,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:id="@+id/linearLayoutReviewBox">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review text goes in here..."
-                        android:textColor="#FF000000"
-                        android:layout_margin="5dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review text goes in here..."
-                        android:textColor="#FF000000"
-                        android:layout_margin="5dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review text goes in here..."
-                        android:textColor="#FF000000"
-                        android:layout_margin="5dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review text goes in here..."
-                        android:textColor="#FF000000"
-                        android:layout_margin="5dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review text goes in here..."
-                        android:textColor="#FF000000"
-                        android:layout_margin="5dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review text goes in here..."
-                        android:textColor="#FF000000"
-                        android:layout_margin="5dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Review text goes in here..."
-                        android:textColor="#FF000000"
-                        android:layout_margin="5dp"/>
 
                 </LinearLayout>
 
