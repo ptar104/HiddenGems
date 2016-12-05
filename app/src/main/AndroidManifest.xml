@@ -43,7 +43,8 @@
             android:screenOrientation="portrait" ></activity>
         <activity
             android:name=".GemInfoActivity"
-            android:screenOrientation="portrait" ></activity>
+            android:screenOrientation="portrait" >
+        </activity>
         <activity
             android:name=".AddGemActivity"
             android:screenOrientation="portrait" ></activity>

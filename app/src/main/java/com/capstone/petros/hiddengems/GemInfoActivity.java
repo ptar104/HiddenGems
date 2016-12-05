@@ -11,14 +11,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import android.net.Uri;
+import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ArrayList;
 
 public class GemInfoActivity extends AppCompatActivity {
     ListView reviewsList;
-    ArrayList<String> reviews = new ArrayList<String>();
-    ArrayAdapter<String> mAdapter;
-
     final int CREATE_REVIEW = 828;
     GemInformation currGem = null;
+    ArrayAdapter mAdapter;
+    ArrayList<String> reviews = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,25 @@ public class GemInfoActivity extends AppCompatActivity {
         reviews.addAll(currGem.getReviews());
         mAdapter.notifyDataSetChanged();
 
+
+        // Spawn Ike's Pizza Gem
+        ArrayList<GemInformation.Category> al = new ArrayList<>();
+        al.add(GemInformation.Category.RESTAURANT);
+        GemInformation gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
+                "20 years", al, 38.985910, -76.943);
+        gem.setGemName("Ike's Pizza");
+
+        //Update the UI...
+        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
+        title.setText(gem.getGemName());
+        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
+        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
+                                                        // AND CALCULATE DISTANCE.
+        TextView reviews = (TextView)findViewById(R.id.textViewNumberOfGems);
+        reviews.setText(gem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+        TextView description = (TextView)findViewById(R.id.textViewDescription);
+        description.setText(gem.getDescription());
+
         final ImageButton backButton = (ImageButton)findViewById(R.id.detailsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +72,7 @@ public class GemInfoActivity extends AppCompatActivity {
         navigateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                launchNavigation(view);
             }
         });
 
@@ -61,6 +85,14 @@ public class GemInfoActivity extends AppCompatActivity {
                 startActivityForResult(intent, CREATE_REVIEW);
             }
         });
+    }
+
+    public void launchNavigation(View button) {
+        Uri navigationUri = Uri.parse("google.navigation:q=" + currGem.getLocation().latitude+","+
+        currGem.getLocation().longitude+"&mode=w");
+        Intent navigationIntent = new Intent(Intent.ACTION_VIEW, navigationUri);
+        navigationIntent.setPackage("com.google.android.apps.maps");
+        startActivity(navigationIntent);
     }
 
     @Override

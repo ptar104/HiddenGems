@@ -101,6 +101,11 @@ public class GemInformation implements Serializable {
         description = s;
     }
 
+    // Get the description
+    public String getDescription() {
+        return description;
+    }
+
     // Set category of Gem
     public void setCategory(ArrayList<Category> category) {
         this.category = category;
@@ -112,7 +117,7 @@ public class GemInformation implements Serializable {
     }
 
     public LatLng getLocation() {
-        return new LatLng(this.latitude, this.longitude);
+        return new LatLng(latitude,longitude);
     }
 
     @Override
