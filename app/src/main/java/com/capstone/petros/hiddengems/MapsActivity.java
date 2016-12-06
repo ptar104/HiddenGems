@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -102,6 +103,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         View popupView = layoutInflater.inflate(R.layout.gem_popup, null);
         _popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextView gemName = (TextView) popupView.findViewById(R.id.titleText);
+        TextView subTitleText = (TextView) popupView.findViewById(R.id.titleText);
+
+//        gemName.setText();
 
         // Set position as tag on moreInfoButton
         Button moreInfoButton = (Button) popupView.findViewById(R.id.moreButton);
