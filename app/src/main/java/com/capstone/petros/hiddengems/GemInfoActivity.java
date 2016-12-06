@@ -4,8 +4,14 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 import android.net.Uri;
 import android.widget.TextView;
 
@@ -14,44 +20,47 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 
 public class GemInfoActivity extends AppCompatActivity {
-
+    ListView reviewsList;
     final int CREATE_REVIEW = 828;
-    GemInformation gem;
+    GemInformation currGem = null;
+    GemInformation updatedGem = null; // Temporary datastore for gems with added reviews, to update gem if user returns to main map view
+    ArrayAdapter mAdapter;
+    ArrayList<String> reviews = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gem_info);
 
+        reviewsList = (ListView)findViewById(R.id.reviewsList);
+        mAdapter = new ArrayAdapter<String>(this, R.layout.review_item, reviews);
+        reviewsList.setAdapter(mAdapter);
 
-        // Because we haven't sent in the gem info yet, I'm just going to make a fake gem
-        // for Ike's pizza.
-        ArrayList<GemInformation.Category> al = new ArrayList<>();
-        al.add(GemInformation.Category.RESTAURANT);
-        gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
-                "20 years", al, 38.985910, -76.943);
-        gem.setGemName("Ike's Pizza");
+        // Initialize currGem reference
+        currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
 
-        //Update the UI...
-        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
-        title.setText(gem.getGemName());
-        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
-        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
-                                                        // AND CALCULATE DISTANCE.
-        TextView reviews = (TextView)findViewById(R.id.textViewNumberOfGems);
-        reviews.setText(gem.getRating()+" gems / 5 gems"); // TODO: Update with images.
-        TextView description = (TextView)findViewById(R.id.textViewDescription);
-        description.setText(gem.getDescription());
-        // And now go through arraylist of reviews!!
-        for(String s : gem.getReviews()){
-            // TODO: Yoshi said he took care of updating the reviews.
+        // Populate reviews
+        if (currGem.getReviews().size() > 0) {
+            reviews.addAll(currGem.getReviews());
         }
+
+        mAdapter.notifyDataSetChanged();
+
+//        //Update the UI...
+        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
+        title.setText(currGem.getGemName());
+//        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
+//        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
+//                                                        // AND CALCULATE DISTANCE.
+//        reviews.setText(gem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+        TextView description = (TextView)findViewById(R.id.textViewDescription);
+        description.setText(currGem.getDescription());
 
         final ImageButton backButton = (ImageButton)findViewById(R.id.detailsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                returnWithUpdatedGem();
             }
         });
 
@@ -68,17 +77,47 @@ public class GemInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GemInfoActivity.this, ReviewActivity.class);
-
+                intent.putExtra("currGem", currGem);
                 startActivityForResult(intent, CREATE_REVIEW);
             }
         });
     }
 
-    public void launchNavigation(View button){
-        Uri navigationUri = Uri.parse("google.navigation:q="+gem.getLocation().latitude+","+
-        gem.getLocation().longitude+"&mode=w");
+    public void launchNavigation(View button) {
+        Uri navigationUri = Uri.parse("google.navigation:q=" + currGem.getLocation().latitude+","+
+        currGem.getLocation().longitude+"&mode=w");
         Intent navigationIntent = new Intent(Intent.ACTION_VIEW, navigationUri);
         navigationIntent.setPackage("com.google.android.apps.maps");
         startActivity(navigationIntent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        returnWithUpdatedGem();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CREATE_REVIEW && resultCode == RESULT_OK) {
+            updatedGem = (GemInformation)data.getSerializableExtra("updatedGem");
+
+            int numReviews = updatedGem.getReviews().size();
+            String newReview = updatedGem.getReviews().get(numReviews - 1); // Index should never be out of bounds because at least one review exists
+            reviews.add(newReview);
+            mAdapter.notifyDataSetChanged();
+            Toast.makeText(this, "New review: " + newReview, Toast.LENGTH_SHORT).show();
+
+            // Add review for gem
+        }
+    }
+
+    // Menu back or regular back button pressed
+    public void returnWithUpdatedGem() {
+        Intent data = new Intent();
+        data.putExtra("updatedGem", (Serializable) updatedGem); // May be null, will be checked in MapsActivity
+        setResult(RESULT_CANCELED, data);
+        finish();
     }
 }
