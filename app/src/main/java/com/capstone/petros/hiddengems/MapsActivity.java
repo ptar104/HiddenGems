@@ -108,6 +108,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    public void onKeyClickClose(View v) {
+        _keyWindow.dismiss();
+    }
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
         Log.i(TAG, "Tapped marker with location: " + marker.getPosition()); // TODO: Decide whether we want this approach or assign UUID to each gem and add to marker as tag
@@ -126,9 +130,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Button moreInfoButton = (Button) popupView.findViewById(R.id.moreButton);
         moreInfoButton.setTag(marker.getPosition());
 
-        // Need a view as an anchor- was button before, not sure how to use Marker
         View map = findViewById(R.id.map);
-        _popupWindow.showAsDropDown(map, 50, -20);
+        // Show in center for now
+        _keyWindow.showAtLocation(map, Gravity.CENTER, 0, 0);
 
         return true;
     }
