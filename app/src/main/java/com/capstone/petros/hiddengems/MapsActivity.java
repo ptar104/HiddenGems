@@ -5,6 +5,7 @@ import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     final private String TAG = "MapsActivity";
 
     PopupWindow _popupWindow;
+    PopupWindow _keyWindow;
     ArrayList<GemInformation> gems = new ArrayList<GemInformation>(); // Temporary datastore for all gems - not persistent
 
     @Override
@@ -94,9 +96,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         initDemoGems();
     }
 
+    public void onKeyClick(View v){
+        LayoutInflater layoutInflater = (LayoutInflater)getBaseContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+        View popupView = layoutInflater.inflate(R.layout.map_key, null);
+        _keyWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        // Show in center
+        _keyWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
+    }
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
         Log.i(TAG, "Tapped marker with location: " + marker.getPosition()); // TODO: Decide whether we want this approach or assign UUID to each gem and add to marker as tag
+
+        // Dismiss popup before opening new one
+        if (_popupWindow != null) {
+            _popupWindow.dismiss();
+        }
         LayoutInflater layoutInflater = (LayoutInflater)getBaseContext()
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
         View popupView = layoutInflater.inflate(R.layout.gem_popup, null);
