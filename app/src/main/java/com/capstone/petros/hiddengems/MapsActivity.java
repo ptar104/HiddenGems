@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -70,9 +71,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newGemLocation, 18.0f));
         } else if (resultCode == RESULT_CANCELED) {
-            GemInformation updatedGem = (GemInformation) data.getSerializableExtra("updatedGem");
-            if (updatedGem != null) {
-                 // TODO: update correct gem
+            if (data != null && data.hasExtra("updatedGem")) {
+                // TODO: update gem
+                GemInformation gem = (GemInformation) data.getSerializableExtra("updatedGem");
             }
         }
     }

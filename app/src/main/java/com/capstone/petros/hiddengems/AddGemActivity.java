@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -22,15 +23,26 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class AddGemActivity extends AppCompatActivity implements OnConnectionFailedListener {
     private String TAG = "AddGemActivity";
     int PLACE_PICKER_REQUEST = 1;
+    EditText gemName;
+    EditText description;
+    CheckBox restaurantCheck;
+    CheckBox historicCheck;
+    CheckBox entertainmentCheck;
+    CheckBox otherCheck;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_gem);
+
+        gemName = (EditText)findViewById(R.id.addGemName);
+        description = (EditText)findViewById(R.id.addGemDescription);
 
         final ImageButton backButton = (ImageButton)findViewById(R.id.addGemBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +57,25 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
             @Override
             public void onClick(View view) {
                 PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                // Validate form and prompt for location using Google Places Picker
+                /* Validate form and prompt for location using Google Places Picker */
+
+                // Check gem name
+                if (gemName.getText().toString().length() == 0) {
+                    Toast.makeText(AddGemActivity.this, "Please specify a gem name.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Check gem description
+                if (description.getText().toString().length() == 0) {
+                    Toast.makeText(AddGemActivity.this, "Please specify a gem description.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (!restaurantCheck.isChecked() && !historicCheck.isChecked() && !entertainmentCheck.isChecked() && !otherCheck.isChecked()) {
+                    Toast.makeText(AddGemActivity.this, "Please select at least one gem type.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 try  {
                     startActivityForResult(builder.build(AddGemActivity.this), PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {
@@ -67,8 +97,7 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
                 String toastMsg = String.format("Place: %s", place.getName());
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
 
-                final EditText gemName = (EditText)findViewById(R.id.addGemName);
-                final EditText description = (EditText)findViewById(R.id.addGemDescription);
+
 
                 Intent result = new Intent();
 
@@ -79,6 +108,19 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
                 gem.setGemName(title);
                 gem.setDescription(descriptionText);
+
+                ArrayList<GemInformation.Category> categories = new ArrayList<GemInformation.Category>();
+
+                if (restaurantCheck.isChecked())
+                    categories.add(GemInformation.Category.RESTAURANT);
+                if (historicCheck.isChecked())
+                    categories.add(GemInformation.Category.HISTORIC);
+                if (entertainmentCheck.isChecked())
+                    categories.add(GemInformation.Category.ENTERTAINMENT);
+                if (otherCheck.isChecked())
+                    categories.add(GemInformation.Category.OTHER);
+
+                gem.setCategory(categories);
                 gem.setLocation(place.getLatLng().latitude, place.getLatLng().longitude);
 
                 Log.i(TAG, gem.toString());
