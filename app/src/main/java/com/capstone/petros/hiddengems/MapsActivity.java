@@ -132,7 +132,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         View map = findViewById(R.id.map);
         // Show in center for now
-        _keyWindow.showAtLocation(map, Gravity.CENTER, 0, 0);
+        _popupWindow.showAtLocation(map, Gravity.CENTER, 0, 0);
 
         return true;
     }
