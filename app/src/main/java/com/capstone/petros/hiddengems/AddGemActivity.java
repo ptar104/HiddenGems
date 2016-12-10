@@ -43,19 +43,19 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
         gemName = (EditText)findViewById(R.id.addGemName);
         description = (EditText)findViewById(R.id.addGemDescription);
-
-        final ImageButton backButton = (ImageButton)findViewById(R.id.addGemBackButton);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
         restaurantCheck = (CheckBox)findViewById(R.id.restaurantCheck);
         historicCheck = (CheckBox)findViewById(R.id.historicCheck);
         entertainmentCheck = (CheckBox)findViewById(R.id.entertainmentCheck);
         otherCheck = (CheckBox)findViewById(R.id.otherCheck);
+        
+        final ImageButton backButton = (ImageButton)findViewById(R.id.addGemBackButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setResult(RESULT_CANCELED);
+                finish();
+            }
+        });
 
         final Button submitButton = (Button)findViewById(R.id.submitGemButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
