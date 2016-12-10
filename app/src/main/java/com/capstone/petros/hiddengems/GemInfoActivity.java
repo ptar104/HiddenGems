@@ -1,6 +1,7 @@
 package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +49,12 @@ public class GemInfoActivity extends AppCompatActivity {
 
 //        //Update the UI...
         TextView title = (TextView)findViewById(R.id.textViewGemTitle);
-        title.setText(currGem.getGemName());
+        title.setText(currGem.getGemName().toUpperCase());
+
+        // Set typeface
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Lato-Semibold.ttf");
+        title.setTypeface(type);
+
 //        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
 //        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
 //                                                        // AND CALCULATE DISTANCE.

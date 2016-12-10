@@ -2,6 +2,7 @@ package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
 import android.location.Location;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -42,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
 //        this.getWindow().setStatusBarColor(getColor(R.color.colorPrimaryDark));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

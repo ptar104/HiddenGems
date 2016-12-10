@@ -20,10 +20,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:textSize="40dp"
             android:textColor="#FFFFFFFF"
             android:text="IKE'S PIZZA"
-            android:id="@+id/textViewGemTitle" />
+            android:id="@+id/textViewGemTitle"
+            android:textSize="24dp" />
 
         <ImageButton
             android:layout_width="wrap_content"

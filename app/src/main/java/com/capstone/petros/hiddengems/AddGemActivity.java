@@ -1,6 +1,7 @@
 package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.Image;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
@@ -22,8 +23,12 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 
+import org.w3c.dom.Text;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import static android.R.attr.type;
 
 public class AddGemActivity extends AppCompatActivity implements OnConnectionFailedListener {
     private String TAG = "AddGemActivity";
@@ -47,7 +52,15 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
         historicCheck = (CheckBox)findViewById(R.id.historicCheck);
         entertainmentCheck = (CheckBox)findViewById(R.id.entertainmentCheck);
         otherCheck = (CheckBox)findViewById(R.id.otherCheck);
-        
+
+        TextView title = (TextView)findViewById(R.id.textViewGemTitle);
+        title.setText(title.getText().toString().toUpperCase());
+
+        // Set typeface
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Lato-Semibold.ttf");
+        title.setTypeface(type);
+
+
         final ImageButton backButton = (ImageButton)findViewById(R.id.addGemBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -25,8 +25,9 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="Add New Gem"
-            android:textSize="40dp"
-            android:textColor="#FFFFFFFF" />
+            android:textColor="#FFFFFFFF"
+            android:id="@+id/textViewGemTitle"
+            android:textSize="24dp" />
 
         <ImageButton
             android:layout_width="wrap_content"
