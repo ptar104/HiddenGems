@@ -52,6 +52,11 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
             }
         });
 
+        restaurantCheck = (CheckBox)findViewById(R.id.restaurantCheck);
+        historicCheck = (CheckBox)findViewById(R.id.historicCheck);
+        entertainmentCheck = (CheckBox)findViewById(R.id.entertainmentCheck);
+        otherCheck = (CheckBox)findViewById(R.id.otherCheck);
+
         final Button submitButton = (Button)findViewById(R.id.submitGemButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
