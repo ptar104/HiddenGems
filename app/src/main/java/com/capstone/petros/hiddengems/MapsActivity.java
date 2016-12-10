@@ -150,6 +150,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.i(TAG, "Got LatLng: " + gemLocation);
         // Find matching gem
+        GemInformation match = findGemWithLocation(gemLocation);
+
+        if (match != null) {
+            intent.putExtra("currGem", match);
+            startActivity(intent);
+        }
+
+        // TODO: Determine which gem is clicked - may be a costly process of iterating through all existing gems and finding a matching location
+
+    }
+
+    public GemInformation findGemWithLocation(LatLng gemLocation) {
         GemInformation match = null;
         for (GemInformation currGem : this.gems) {
             Log.i(TAG, currGem.getGemName() + currGem.getLocation());
@@ -159,14 +171,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             }
         }
-
-        if (match != null) {
-            intent.putExtra("currGem", match);
-            startActivity(intent);
-        }
-
-        // TODO: Determine which gem is clicked - may be a costly process of iterating through all existing gems and finding a matching location
-
+        return match;
     }
 
     public void onButtonClickClose(View v) {
