@@ -18,16 +18,34 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="35dp">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             app:srcCompat="@drawable/ic_ruby"
             android:id="@+id/imageView5"
-            android:layout_height="15dp"
+            android:tint="#FF34CFF8"
+            android:layout_height="18dp"
             android:layout_width="20dp"
             android:layout_marginBottom="10dp"/>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             app:srcCompat="@drawable/ic_tallgem"
             android:id="@+id/imageView6"
+            android:tint="#FF15C739"
+            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_marginBottom="10dp"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            app:srcCompat="@drawable/ic_fatgem"
+            android:id="@+id/entertainmentGem"
+            android:tint="#FFFA4A4A"
+            android:layout_height="18dp"
+            android:layout_width="20dp"
+            android:layout_marginBottom="10dp"/>
+
+        <android.support.v7.widget.AppCompatImageView
+            app:srcCompat="@drawable/ic_diamond"
+            android:id="@+id/otherGem"
+            android:tint="#FFEFE228"
             android:layout_height="24dp"
             android:layout_width="20dp" />
     </LinearLayout>
@@ -57,6 +75,7 @@
             android:layout_height="wrap_content"
             android:text="Restaurant"
             android:id="@+id/restaurantText"
+            android:textColor="#FF000000"
             android:layout_marginBottom="10dp"/>
 
         <TextView
@@ -64,6 +83,7 @@
             android:layout_height="wrap_content"
             android:text="Historic"
             android:id="@+id/historicText"
+            android:textColor="#FF000000"
             android:layout_marginBottom="10dp"/>
 
         <TextView
@@ -71,12 +91,14 @@
             android:layout_height="wrap_content"
             android:text="Entertainment"
             android:id="@+id/entertainmentText"
+            android:textColor="#FF000000"
             android:layout_marginBottom="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Other"
+            android:textColor="#FF000000"
             android:id="@+id/otherText" />
 
     </LinearLayout>
