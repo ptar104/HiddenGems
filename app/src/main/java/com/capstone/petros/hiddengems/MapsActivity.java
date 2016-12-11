@@ -19,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -71,6 +72,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng newGemLocation = newGem.getLocation();
 
             this.gems.add(newGem);
+            BitmapDescriptor gemIcon;
+            switch(newGem.getCategory()){
+                case RESTAURANT:
+                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_ruby);
+                    break;
+                case HISTORIC:
+                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_tallgem);
+                    break;
+                case ENTERTAINMENT:
+                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_fatgem);
+                    break;
+                case OTHER:
+                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_diamond);
+                    break;
+            }
 
             mMap.addMarker(new MarkerOptions().position(newGemLocation).title(newGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem))); // TODO: Change to shiny gem up until createdTime reaches x seconds
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
@@ -194,12 +210,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void initDemoGems() {
         // Spawn Ike's Pizza Gem
-        ArrayList<GemInformation.Category> categories = new ArrayList<>();
-        categories.add(GemInformation.Category.RESTAURANT);
+        GemInformation.Category category = GemInformation.Category.RESTAURANT;
 
         // Ike's Pizza
         GemInformation gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
-                "20 years", categories, 38.991090, -76.934092);
+                "20 years", category, 38.991090, -76.934092);
 
         gem.setGemName("Ike's Pizza");
         gem.addReview("Better than my mom's food");
@@ -209,12 +224,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.i(TAG, "Initialized Ike's with" +  gem.getLocation());
         this.gems.add(gem);
 
+        category = GemInformation.Category.OTHER;
         // McKeldin Library
         gem = new GemInformation(5, "I love the Starbucks inside the footnotes cafe!", "The biggest library on campus with an abundance of helpful resources for optimized performance in school." +
-                "20 years", categories, 38.9859315, -76.9458476);
+                "20 years", category, 38.9859315, -76.9458476);
 
-        categories = new ArrayList<GemInformation.Category>();
-        categories.add(GemInformation.Category.OTHER);
         gem.setGemName("McKeldin Library");
         gem.addReview("They don't accept Starbucks gift cards...");
         gem.addReview("2nd floor is too loud to get anything done unless it's a group project");

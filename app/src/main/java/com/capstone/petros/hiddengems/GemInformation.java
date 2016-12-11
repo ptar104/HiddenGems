@@ -24,7 +24,7 @@ public class GemInformation implements Serializable {
     private ArrayList<Integer> ratingList; // All rating values
     private ArrayList<String> reviews;  // All review descriptions - Not sparse, so not 1:1, but our reviews list only shows review explanations, not number of gems so it's fine.
     private String description; // Gem description - singular.
-    private ArrayList<Category> category; // Array of Category enums as defined above
+    private Category category; // Array of Category enums as defined above
     private String gemName; // Name of gem
 //    private Time timeCreated; // To keep track of shiny gems and its expirations
     private Double latitude; // Decided to use LatLng instead of Location because that's what we get back from Places API
@@ -37,7 +37,7 @@ public class GemInformation implements Serializable {
         this.ratingList = new ArrayList<Integer>();
         this.reviews = new ArrayList<String>();
         this.description = "";
-        this.category = new ArrayList<Category>();
+        this.category = Category.RESTAURANT;
 //        this.timeCreated = new Time();
 //        this.timeCreated.setToNow();
 //        this.location = null;
@@ -46,7 +46,7 @@ public class GemInformation implements Serializable {
     }
 
     // Constructor to set rating, review, description, category
-    public GemInformation(int rating, String review, String description, ArrayList<Category> category, Double latitude, Double longitude) {
+    public GemInformation(int rating, String review, String description, Category category, Double latitude, Double longitude) {
         this.rating = rating;
         this.avgRating = rating;
         this.ratingList = new ArrayList<>();
@@ -107,9 +107,12 @@ public class GemInformation implements Serializable {
     }
 
     // Set category of Gem
-    public void setCategory(ArrayList<Category> category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
+
+    // Get category of Gem
+    public Category getCategory() { return category; }
 
     public void setLocation(Double latitude, Double longitude) {
         this.latitude = latitude;
