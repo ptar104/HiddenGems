@@ -2,6 +2,7 @@ package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
 import android.location.Location;
+import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -39,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
 //        this.getWindow().setStatusBarColor(getColor(R.color.colorPrimaryDark));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -71,9 +76,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newGemLocation, 18.0f));
         } else if (resultCode == RESULT_CANCELED) {
-            GemInformation updatedGem = (GemInformation) data.getSerializableExtra("updatedGem");
-            if (updatedGem != null) {
-                 // TODO: update correct gem
+            if (data != null && data.hasExtra("updatedGem")) {
+                // TODO: update gem
+                GemInformation gem = (GemInformation) data.getSerializableExtra("updatedGem");
             }
         }
     }
@@ -126,6 +131,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         _popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
 
+        GemInformation match = findGemWithLocation(marker.getPosition());
+
+        if (match == null) {
+            Toast.makeText(MapsActivity.this, "Gem not found. Please try again later.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        TextView gemName = (TextView) popupView.findViewById(R.id.titleText);
+        TextView subTitleText = (TextView) popupView.findViewById(R.id.subTitleText);
+
+        gemName.setText(match.getGemName());
+        subTitleText.setText(match.getDescription());
+
         // Set position as tag on moreInfoButton
         Button moreInfoButton = (Button) popupView.findViewById(R.id.moreButton);
         moreInfoButton.setTag(marker.getPosition());
@@ -144,6 +162,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.i(TAG, "Got LatLng: " + gemLocation);
         // Find matching gem
+        GemInformation match = findGemWithLocation(gemLocation);
+
+        if (match != null) {
+            intent.putExtra("currGem", match);
+            startActivity(intent);
+        }
+
+        // TODO: Determine which gem is clicked - may be a costly process of iterating through all existing gems and finding a matching location
+
+    }
+
+    public GemInformation findGemWithLocation(LatLng gemLocation) {
         GemInformation match = null;
         for (GemInformation currGem : this.gems) {
             Log.i(TAG, currGem.getGemName() + currGem.getLocation());
@@ -153,14 +183,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
             }
         }
-
-        if (match != null) {
-            intent.putExtra("currGem", match);
-            startActivity(intent);
-        }
-
-        // TODO: Determine which gem is clicked - may be a costly process of iterating through all existing gems and finding a matching location
-
+        return match;
     }
 
     public void onButtonClickClose(View v) {
@@ -172,8 +195,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ArrayList<GemInformation.Category> categories = new ArrayList<>();
         categories.add(GemInformation.Category.RESTAURANT);
 
+        // Ike's Pizza
         GemInformation gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
-                "20 years", categories, 38.985910, -76.943);
+                "20 years", categories, 38.991090, -76.934092);
 
         gem.setGemName("Ike's Pizza");
         gem.addReview("Better than my mom's food");
@@ -182,6 +206,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.i(TAG, "Initialized Ike's with" +  gem.getLocation());
         this.gems.add(gem);
+
+        // McKeldin Library
+        gem = new GemInformation(5, "I love the Starbucks inside the footnotes cafe!", "The biggest library on campus with an abundance of helpful resources for optimized performance in school." +
+                "20 years", categories, 38.9859315, -76.9458476);
+
+        categories = new ArrayList<GemInformation.Category>();
+        categories.add(GemInformation.Category.OTHER);
+        gem.setGemName("McKeldin Library");
+        gem.addReview("They don't accept Starbucks gift cards...");
+        gem.addReview("2nd floor is too loud to get anything done unless it's a group project");
+        gem.addReview("The 3D printer here is affordable, and they have many regular printers too!");
+        gem.addReview("This place saved me so many times - you can borrow macbook chargers and bike pumps.");
+
+
+        this.gems.add(gem);
+        // Target Express
+//        gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
+//                "20 years", categories, 38.991090, -76.934092);
+//
+//        gem.setGemName("Ike's Pizza");
+//        gem.addReview("Better than my mom's food");
+//        gem.addReview("You HAVE to check out this place.");
+//        gem.addReview("#tbt Napoli");
 
         for (GemInformation currGem : this.gems) {
             mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));

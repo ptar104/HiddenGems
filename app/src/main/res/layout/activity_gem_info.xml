@@ -20,19 +20,20 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:textSize="40dp"
             android:textColor="#FFFFFFFF"
             android:text="IKE'S PIZZA"
-            android:id="@+id/textViewGemTitle" />
+            android:id="@+id/textViewGemTitle"
+            android:textSize="24dp" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:padding="5dp"
             android:scaleX="-1"
-            app:srcCompat="@android:drawable/ic_media_play"
+            app:srcCompat="@drawable/back"
             android:id="@+id/detailsBackButton"
-            android:background="@android:color/transparent" />
+            android:background="@android:color/transparent"
+            android:rotation="180" />
 
     </RelativeLayout>
 
