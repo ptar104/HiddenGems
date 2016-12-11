@@ -1,7 +1,12 @@
 package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +32,10 @@ public class GemInfoActivity extends AppCompatActivity {
     GemInformation updatedGem = null; // Temporary datastore for gems with added reviews, to update gem if user returns to main map view
     ArrayAdapter mAdapter;
     ArrayList<String> reviews = new ArrayList<String>();
+
+    // Location stuff
+    LocationManager locationManager = null;
+    LocationListener locationListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +64,38 @@ public class GemInfoActivity extends AppCompatActivity {
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Lato-Semibold.ttf");
         title.setTypeface(type);
 
-//        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
-//        quickInfo.setText("Casual Pizza - $$ - .1 mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
-//                                                        // AND CALCULATE DISTANCE.
-//        reviews.setText(gem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+        TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
+        quickInfo.setText("Casual Pizza - $$ - ... mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
+                                                        // AND CALCULATE DISTANCE.
+        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                if(location!=null){
+                    TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
+                    String currentText = (String)quickInfo.getText();
+                    currentText = currentText.substring(0,currentText.length() - 6); //cut off the end
+                    Location gemLoc = new Location("");
+                    gemLoc.setLatitude(currGem.getLocation().latitude);
+                    gemLoc.setLongitude(currGem.getLocation().longitude);
+                    float distanceInMeters = location.distanceTo(gemLoc);
+                    //TODO: Finish this up but just pushing so my changes go through.
+                }
+                else {
+
+                }
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+
+        TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
+        reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
         TextView description = (TextView)findViewById(R.id.textViewDescription);
         description.setText(currGem.getDescription());
 

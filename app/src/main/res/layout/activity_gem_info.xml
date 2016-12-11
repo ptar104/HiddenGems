@@ -44,45 +44,52 @@
         android:layout_weight="1"
         android:background="#FFE6FAFF">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="horizontal"
-            android:layout_weight="5"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true">
+            android:layout_weight=".25">
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".05"/>
 
             <ImageView
                 app:srcCompat="@drawable/pizza1"
                 android:scaleType="center"
-                android:id="@+id/imageView2"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="75dp"
-                android:layout_marginStart="75dp" />
+                android:id="@+id/imageView4"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight=".425"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".05"/>
 
             <ImageView
                 app:srcCompat="@drawable/pizza2"
                 android:scaleType="center"
-                android:id="@+id/imageView"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_alignTop="@+id/imageView2"
-                android:layout_toRightOf="@+id/imageView2"
-                android:layout_toEndOf="@+id/imageView2"
-                android:layout_marginLeft="19dp"
-                android:layout_marginStart="19dp" />
-        </RelativeLayout>
+                android:id="@+id/imageView3"
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight=".425"
+                />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".05"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="5"
+            android:layout_weight=".25"
             android:background="#FFFFFFFF">
 
             <LinearLayout
@@ -129,11 +136,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:orientation="vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:layout_weight="3">
+            android:layout_weight=".5">
 
             <RelativeLayout
                 android:layout_width="match_parent"

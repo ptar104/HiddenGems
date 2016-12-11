@@ -164,6 +164,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Find matching gem
         GemInformation match = findGemWithLocation(gemLocation);
 
+        _popupWindow.dismiss();
+
         if (match != null) {
             intent.putExtra("currGem", match);
             startActivity(intent);
