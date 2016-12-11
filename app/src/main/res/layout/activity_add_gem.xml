@@ -144,40 +144,49 @@
                     android:layout_height="0dp"
                     android:layout_weight=".7">
 
-                    <CheckBox
-                        android:text="Restaurant"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/restaurantCheck"
-                        android:textColor="?attr/colorButtonNormal"
-                        app:buttonTint="?attr/colorButtonNormal"
-                        android:layout_weight="0.05" />
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:id="@+id/radioGroupType">
 
-                    <CheckBox
-                        android:text="Historic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/historicCheck"
-                        android:textColor="?attr/colorButtonNormal"
-                        app:buttonTint="?attr/colorButtonNormal"
-                        android:layout_weight="0.04" />
+                        <RadioButton
+                            android:text="Restaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/restaurantCheck"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal"
+                            android:layout_weight="0.05"
+                            android:checked="true"/>
 
-                    <CheckBox
-                        android:text="Entertainment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/entertainmentCheck"
-                        android:textColor="?attr/colorButtonNormal"
-                        app:buttonTint="?attr/colorButtonNormal" />
+                        <RadioButton
+                            android:text="Historic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/historicCheck"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal"
+                            android:layout_weight="0.04" />
 
-                    <CheckBox
-                        android:text="Other"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/otherCheck"
-                        android:textColor="?attr/colorButtonNormal"
-                        app:buttonTint="?attr/colorButtonNormal"
-                        android:layout_weight="0.05" />
+                        <RadioButton
+                            android:text="Entertainment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/entertainmentCheck"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal" />
+
+                        <RadioButton
+                            android:text="Other"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/otherCheck"
+                            android:textColor="?attr/colorButtonNormal"
+                            app:buttonTint="?attr/colorButtonNormal"
+                            android:layout_weight="0.05" />
+
+                    </RadioGroup>
 
                 </LinearLayout>
 

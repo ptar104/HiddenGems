@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,10 +37,8 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
     int PLACE_PICKER_REQUEST = 1;
     EditText gemName;
     EditText description;
-    CheckBox restaurantCheck;
-    CheckBox historicCheck;
-    CheckBox entertainmentCheck;
-    CheckBox otherCheck;
+    RadioGroup category;
+
 
 
     @Override
@@ -48,10 +48,7 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
         gemName = (EditText)findViewById(R.id.addGemName);
         description = (EditText)findViewById(R.id.addGemDescription);
-        restaurantCheck = (CheckBox)findViewById(R.id.restaurantCheck);
-        historicCheck = (CheckBox)findViewById(R.id.historicCheck);
-        entertainmentCheck = (CheckBox)findViewById(R.id.entertainmentCheck);
-        otherCheck = (CheckBox)findViewById(R.id.otherCheck);
+        category = (RadioGroup)findViewById(R.id.radioGroupType);
 
         TextView title = (TextView)findViewById(R.id.textViewGemTitle);
         title.setText(title.getText().toString().toUpperCase());
@@ -89,11 +86,6 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
                     return;
                 }
 
-                if (!restaurantCheck.isChecked() && !historicCheck.isChecked() && !entertainmentCheck.isChecked() && !otherCheck.isChecked()) {
-                    Toast.makeText(AddGemActivity.this, "Please select at least one gem type.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 try  {
                     startActivityForResult(builder.build(AddGemActivity.this), PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {
@@ -127,18 +119,18 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
                 gem.setGemName(title);
                 gem.setDescription(descriptionText);
 
-                ArrayList<GemInformation.Category> categories = new ArrayList<GemInformation.Category>();
 
-                if (restaurantCheck.isChecked())
-                    categories.add(GemInformation.Category.RESTAURANT);
-                if (historicCheck.isChecked())
-                    categories.add(GemInformation.Category.HISTORIC);
-                if (entertainmentCheck.isChecked())
-                    categories.add(GemInformation.Category.ENTERTAINMENT);
-                if (otherCheck.isChecked())
-                    categories.add(GemInformation.Category.OTHER);
 
-                gem.setCategory(categories);
+                if (category.getCheckedRadioButtonId() == R.id.restaurantCheck)
+                    gem.setCategory(GemInformation.Category.RESTAURANT);
+                if (category.getCheckedRadioButtonId() == R.id.historicCheck)
+                    gem.setCategory(GemInformation.Category.HISTORIC);
+                if (category.getCheckedRadioButtonId() == R.id.entertainmentCheck)
+                    gem.setCategory(GemInformation.Category.ENTERTAINMENT);
+                if (category.getCheckedRadioButtonId() == R.id.otherCheck)
+                    gem.setCategory(GemInformation.Category.OTHER);
+
+
                 gem.setLocation(place.getLatLng().latitude, place.getLatLng().longitude);
 
                 Log.i(TAG, gem.toString());

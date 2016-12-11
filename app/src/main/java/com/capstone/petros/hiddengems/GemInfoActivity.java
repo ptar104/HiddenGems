@@ -1,5 +1,6 @@
 package com.capstone.petros.hiddengems;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 
 public class GemInfoActivity extends AppCompatActivity {
+    Activity act = this;
     ListView reviewsList;
     final int CREATE_REVIEW = 828;
     GemInformation currGem = null;
@@ -65,24 +67,22 @@ public class GemInfoActivity extends AppCompatActivity {
         title.setTypeface(type);
 
         TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
-        quickInfo.setText("Casual Pizza - $$ - ... mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
+        quickInfo.setText("Casual Pizza - $$ - [Getting Location...] mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
                                                         // AND CALCULATE DISTANCE.
-        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
-
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 if(location!=null){
                     TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
                     String currentText = (String)quickInfo.getText();
-                    currentText = currentText.substring(0,currentText.length() - 6); //cut off the end
+                    currentText = currentText.substring(0,currentText.lastIndexOf("-")+1); //cut off the end
                     Location gemLoc = new Location("");
                     gemLoc.setLatitude(currGem.getLocation().latitude);
                     gemLoc.setLongitude(currGem.getLocation().longitude);
                     float distanceInMeters = location.distanceTo(gemLoc);
-                    //TODO: Finish this up but just pushing so my changes go through.
-                }
-                else {
-
+                    float distanceInMiles = 0.000621371f * distanceInMeters;
+                    String distanceString = String.format("%.2f",distanceInMiles);
+                    currentText += " "+distanceString + " mi";
+                    quickInfo.setText(currentText);
                 }
             }
 
@@ -124,6 +124,18 @@ public class GemInfoActivity extends AppCompatActivity {
                 startActivityForResult(intent, CREATE_REVIEW);
             }
         });
+    }
+
+    protected void onStop(){
+        super.onStop();
+        locationManager.removeUpdates(locationListener);
+        locationManager = null;
+    }
+
+    protected void onResume() {
+        super.onResume();
+        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
     public void launchNavigation(View button) {

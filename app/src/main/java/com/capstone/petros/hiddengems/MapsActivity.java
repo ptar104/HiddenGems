@@ -2,6 +2,8 @@ package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -40,6 +42,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     PopupWindow _keyWindow;
     ArrayList<GemInformation> gems = new ArrayList<GemInformation>(); // Temporary datastore for all gems - not persistent
 
+    // Location stuff
+    LocationManager locationManager = null;
+    LocationListener locationListener;
+    Location currUserLoc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +67,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivityForResult(intent, CREATE_GEM);
             }
         });
+
+        // Add the location updates here.
+        locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                if(location!=null){
+                    currUserLoc = location;
+                    populateGems();
+                }
+            }
+
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+            public void onProviderEnabled(String provider) {}
+
+            public void onProviderDisabled(String provider) {}
+        };
+
+        // The default staring location:
+        currUserLoc = new Location("");
+        currUserLoc.setLongitude(38.991090);
+        currUserLoc.setLongitude(-76.934092);
+    }
+
+    protected void onStop(){
+        super.onStop();
+        locationManager.removeUpdates(locationListener);
+        locationManager = null;
+    }
+
+    protected void onResume() {
+        super.onResume();
+        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+        // Every 10 seconds, more than 20 meters (Don't want to update too often to help conserve battery)
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000*10, 20, locationListener);
     }
 
     @Override
@@ -227,7 +268,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         category = GemInformation.Category.OTHER;
         // McKeldin Library
         gem = new GemInformation(5, "I love the Starbucks inside the footnotes cafe!", "The biggest library on campus with an abundance of helpful resources for optimized performance in school." +
-                "20 years", category, 38.9859315, -76.9458476);
+                " 20 years", category, 38.9859315, -76.9458476);
 
         gem.setGemName("McKeldin Library");
         gem.addReview("They don't accept Starbucks gift cards...");
@@ -246,12 +287,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //        gem.addReview("You HAVE to check out this place.");
 //        gem.addReview("#tbt Napoli");
 
-        for (GemInformation currGem : this.gems) {
-            mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
-            // Add a marker in Ike's Pizza and move the camera
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(currGem.getLocation()));
-        }
+        populateGems();
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(this.gems.get(0).getLocation(), 18.0f)); // Show Ike's
     }
+
+    public void populateGems(){
+        mMap.clear();
+        for (GemInformation currGem : this.gems) {
+            // Only add if it's within a mile
+            Location gemLoc = new Location("");
+            gemLoc.setLatitude(currGem.getLocation().latitude);
+            gemLoc.setLongitude(currGem.getLocation().longitude);
+            if(currUserLoc.distanceTo(gemLoc) <= 1609.34) // Returns in meters
+                mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
+        }
+    }
+
+
 }
