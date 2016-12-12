@@ -90,6 +90,13 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
                     return;
                 }
 
+                // Check gem description
+                if (quickDescription.getText().toString().length() == 0) {
+                    Toast.makeText(AddGemActivity.this, "Please specify what type of place this gem is.",
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 try  {
                     startActivityForResult(builder.build(AddGemActivity.this), PLACE_PICKER_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {

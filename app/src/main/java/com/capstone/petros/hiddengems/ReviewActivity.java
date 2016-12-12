@@ -98,17 +98,14 @@ public class ReviewActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (userReview.getText().toString() == "") {
-                    Toast.makeText(ReviewActivity.this, "Please write a review first.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
                 // Fetch current gem object
                 GemInformation currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
 
                 // Update existing gem
                 currGem.addRating(selectedRating);
-                currGem.addReview(userReview.getText().toString());
+
+                if(userReview.getText().toString().length() != 0)
+                    currGem.addReview(userReview.getText().toString());
 
                 // Prepare result
                 Intent data = new Intent();

@@ -152,39 +152,44 @@
 
                         <RadioButton
                             android:text="Restaurant"
-                            android:layout_width="wrap_content"
+                            android:textSize="12dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/restaurantCheck"
                             android:textColor="?attr/colorButtonNormal"
                             app:buttonTint="?attr/colorButtonNormal"
-                            android:layout_weight="0.05"
+                            android:layout_weight=".27"
                             android:checked="true"/>
 
                         <RadioButton
                             android:text="Historic"
-                            android:layout_width="wrap_content"
+                            android:textSize="12dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/historicCheck"
                             android:textColor="?attr/colorButtonNormal"
                             app:buttonTint="?attr/colorButtonNormal"
-                            android:layout_weight="0.04" />
+                            android:layout_weight=".21" />
 
                         <RadioButton
                             android:text="Entertainment"
-                            android:layout_width="wrap_content"
+                            android:textSize="12dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/entertainmentCheck"
                             android:textColor="?attr/colorButtonNormal"
-                            app:buttonTint="?attr/colorButtonNormal" />
+                            app:buttonTint="?attr/colorButtonNormal"
+                            android:layout_weight=".32"/>
 
                         <RadioButton
                             android:text="Other"
-                            android:layout_width="wrap_content"
+                            android:textSize="12dp"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:id="@+id/otherCheck"
                             android:textColor="?attr/colorButtonNormal"
                             app:buttonTint="?attr/colorButtonNormal"
-                            android:layout_weight="0.05" />
+                            android:layout_weight=".2"/>
 
                     </RadioGroup>
 

@@ -31,7 +31,6 @@ public class GemInfoActivity extends AppCompatActivity {
     ListView reviewsList;
     final int CREATE_REVIEW = 828;
     GemInformation currGem = null;
-    GemInformation updatedGem = null; // Temporary datastore for gems with added reviews, to update gem if user returns to main map view
     ArrayAdapter mAdapter;
     ArrayList<String> reviews = new ArrayList<String>();
 
@@ -175,26 +174,32 @@ public class GemInfoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CREATE_REVIEW && resultCode == RESULT_OK) {
-            updatedGem = (GemInformation)data.getSerializableExtra("updatedGem");
+            currGem = (GemInformation)data.getSerializableExtra("updatedGem");
 
-            int numReviews = updatedGem.getReviews().size();
-            String newReview = updatedGem.getReviews().get(numReviews - 1); // Index should never be out of bounds because at least one review exists
-            reviews.add(newReview);
-            mAdapter.notifyDataSetChanged();
-            Toast.makeText(this, "New review: " + newReview, Toast.LENGTH_SHORT).show();
+            int numReviews = currGem.getReviews().size();
+            int oldNumReviews = reviews.size(); // If they don't type anything, still add the gem number
+            if(oldNumReviews != numReviews) {
+                String newReview = currGem.getReviews().get(numReviews - 1); // Index should never be out of bounds because at least one review exists
+                reviews.add(newReview);
+                mAdapter.notifyDataSetChanged();
+                Toast.makeText(this, "New review: " + newReview, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "Review accepted", Toast.LENGTH_SHORT).show();
+            }
+
+
 
             // Update rating of gem
             TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
-            reviewsText.setText(updatedGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
-
-            // Add review for gem
+            reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
         }
     }
 
     // Menu back or regular back button pressed
     public void returnWithUpdatedGem() {
         Intent data = new Intent();
-        data.putExtra("updatedGem", (Serializable) updatedGem); // May be null, will be checked in MapsActivity
+        data.putExtra("updatedGem", (Serializable) currGem); // May be null, will be checked in MapsActivity
         setResult(RESULT_OK, data);
         finish();
     }
