@@ -176,7 +176,7 @@ public class GemInfoActivity extends AppCompatActivity {
     public void returnWithUpdatedGem() {
         Intent data = new Intent();
         data.putExtra("updatedGem", (Serializable) updatedGem); // May be null, will be checked in MapsActivity
-        setResult(RESULT_CANCELED, data);
+        setResult(RESULT_OK, data);
         finish();
     }
 }

@@ -108,7 +108,6 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
 
 
-
                 Intent result = new Intent();
 
                 String title = gemName.getText().toString();
@@ -149,4 +148,5 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 //            Log.i(TAG, connectionResult.getErrorMessage());
 //        }
     }
+
 }

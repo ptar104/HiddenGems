@@ -35,6 +35,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     final int CREATE_GEM = 1337;
+    final int REVIEW_ADDED = 2;
+
 
     final private String TAG = "MapsActivity";
 
@@ -132,6 +134,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions().position(newGemLocation).title(newGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem))); // TODO: Change to shiny gem up until createdTime reaches x seconds
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newGemLocation, 18.0f));
+
+        // Save review of gem after added.
+        } else if (requestCode == REVIEW_ADDED && resultCode == RESULT_OK) {
+            GemInformation updatedGem = (GemInformation)data.getSerializableExtra("updatedGem");
+            int index = 0;
+
+            for (int i = 0; i < gems.size(); i++) {
+                if (updatedGem.getLocation().toString().compareTo(gems.get(i).toString()) == 0) {
+                    index = i;
+                    break;
+                }
+            }
+            gems.add(index, updatedGem);
+
         } else if (resultCode == RESULT_CANCELED) {
             if (data != null && data.hasExtra("updatedGem")) {
                 // TODO: update gem
@@ -215,6 +231,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMoreInfoClick(View v) {
         Intent intent  = new Intent(MapsActivity.this, GemInfoActivity.class);
 
+
         LatLng gemLocation = (LatLng) v.getTag();
 
         Log.i(TAG, "Got LatLng: " + gemLocation);
@@ -225,7 +242,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (match != null) {
             intent.putExtra("currGem", match);
-            startActivity(intent);
+            startActivityForResult(intent, REVIEW_ADDED);
         }
 
         // TODO: Determine which gem is clicked - may be a costly process of iterating through all existing gems and finding a matching location
@@ -303,6 +320,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
         }
     }
+
+
 
 
 }
