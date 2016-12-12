@@ -67,8 +67,15 @@ public class GemInfoActivity extends AppCompatActivity {
         title.setTypeface(type);
 
         TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
-        quickInfo.setText("Casual Pizza - $$ - [Getting Location...] mi"); // TODO: NEED TO ADD THIS TO GEM INFO,
-                                                        // AND CALCULATE DISTANCE.
+        String quickInfoText = currGem.getQuickDescription() + " - ";
+        if(currGem.getPrice() != 0){
+            for(int i = 0; i < currGem.getPrice(); i++)
+                quickInfoText += "$";
+            quickInfoText += " - ";
+        }
+        quickInfoText += "[Getting Location...] mi"; //Until the location callback gets the location
+        quickInfo.setText(quickInfoText);
+
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 if(location!=null){
@@ -128,14 +135,26 @@ public class GemInfoActivity extends AppCompatActivity {
 
     protected void onStop(){
         super.onStop();
-        locationManager.removeUpdates(locationListener);
+        try {
+            locationManager.removeUpdates(locationListener);
+        } catch (SecurityException e) {
+            // User does not have location on - that is quite essential to app tho!
+            Toast.makeText(this, "Please allow this application to access your location data",
+                    Toast.LENGTH_LONG);
+        }
         locationManager = null;
     }
 
     protected void onResume() {
         super.onResume();
         locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        try {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        }
+        catch (SecurityException e) {
+            Toast.makeText(this, "Please allow this application to access your location data",
+                    Toast.LENGTH_LONG);
+        }
     }
 
     public void launchNavigation(View button) {

@@ -196,11 +196,42 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight=".12"
+            android:paddingTop="5dp">
+
+            <TextView
+                android:text="What kind of place is this?"
+                android:layout_marginLeft="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:id="@+id/textView3"
+                android:textColor="@android:color/black"
+                android:textStyle="normal|bold" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/addGemQuickDescription"
+                android:hint=" (ex: casual pizza, water park, etc...)"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.7"
+                android:background="@android:color/darker_gray"
+                android:layout_marginTop="3dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight=".18"
             android:background="@android:color/background_light">
 
             <TextView
-                android:text="Write a description..."
+                android:text="Write a description of the gem..."
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"
@@ -216,7 +247,7 @@
                 android:id="@+id/addGemDescription"
                 android:background="@android:color/darker_gray"
                 android:layout_marginRight="10dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="3dp" />
         </LinearLayout>
 
@@ -226,12 +257,102 @@
             android:orientation="vertical"
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
-            android:layout_weight=".33">
+            android:layout_weight=".12">
 
-            <Space
+            <TextView
+                android:text="How much will going to this gem cost (in total)?"
+                android:layout_marginLeft="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.38" />
+                android:layout_height="0dp"
+                android:layout_weight="0.3"
+                android:id="@+id/textView5"
+                android:textColor="@android:color/black"
+                android:textStyle="normal|bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="0dp"
+                android:layout_weight="0.7">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/dollarSign0"
+                        android:clickable="true"
+                        android:onClick="dollarSign0Clicked"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:layout_toRightOf="@+id/dollarSign0"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/dollarSign1"
+                        android:clickable="true"
+                        android:onClick="dollarSign1Clicked"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:layout_toRightOf="@+id/dollarSign1"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/dollarSign2"
+                        android:clickable="true"
+                        android:onClick="dollarSign2Clicked"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:layout_toRightOf="@+id/dollarSign2"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/dollarSign3"
+                        android:clickable="true"
+                        android:onClick="dollarSign3Clicked"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:scaleType="center"
+                        android:layout_toRightOf="@+id/dollarSign3"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/dollarSign4"
+                        android:clickable="true"
+                        android:onClick="dollarSign4Clicked"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:text="...less than $10"
+                    android:textSize="16dp"
+                    android:textColor="?attr/colorButtonNormal"
+                    android:gravity="center_vertical"
+                    android:id="@+id/dollarSignText"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:layout_weight=".09">
 
             <Button
                 android:text="SUBMIT GEM"

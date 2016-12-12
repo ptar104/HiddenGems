@@ -54,6 +54,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        // The default staring location:
+        currUserLoc = new Location("");
+        currUserLoc.setLatitude(38.991090);
+        currUserLoc.setLongitude(-76.934092);
+
 //        this.getWindow().setStatusBarColor(getColor(R.color.colorPrimaryDark));
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -85,25 +90,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             public void onProviderDisabled(String provider) {}
         };
-
-        // The default staring location:
-        currUserLoc = new Location("");
-        currUserLoc.setLongitude(38.991090);
-        currUserLoc.setLongitude(-76.934092);
+    }
+    protected void onStop(){
+        super.onStop();
+        try {
+            locationManager.removeUpdates(locationListener);
+        } catch (SecurityException e) {
+            // User does not have location on - that is quite essential to app tho!
+            Toast.makeText(this, "Please allow this application to access your location data",
+                    Toast.LENGTH_LONG);
+        }
+        locationManager = null;
     }
 
-//    protected void onStop(){
-//        super.onStop();
-//        locationManager.removeUpdates(locationListener);
-//        locationManager = null;
-//    }
-
-//    protected void onResume() {
-//        super.onResume();
-//        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
-//        // Every 10 seconds, more than 20 meters (Don't want to update too often to help conserve battery)
-//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000*10, 20, locationListener);
-//    }
+    protected void onResume() {
+        super.onResume();
+        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+        // Every 10 seconds, more than 20 meters (Don't want to update too often to help conserve battery)
+        try {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000 * 10, 20, locationListener);
+        }
+        catch (SecurityException e) {
+            Toast.makeText(this, "Please allow this application to access your location data",
+                    Toast.LENGTH_LONG);
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -115,23 +126,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng newGemLocation = newGem.getLocation();
 
             this.gems.add(newGem);
-            BitmapDescriptor gemIcon;
-            switch(newGem.getCategory()){
-                case RESTAURANT:
-                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_ruby);
-                    break;
-                case HISTORIC:
-                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_tallgem);
-                    break;
-                case ENTERTAINMENT:
-                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_fatgem);
-                    break;
-                case OTHER:
-                    gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_diamond);
-                    break;
-            }
 
-            mMap.addMarker(new MarkerOptions().position(newGemLocation).title(newGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem))); // TODO: Change to shiny gem up until createdTime reaches x seconds
+            populateGems(); // TODO: shiny gems
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(newGemLocation, 18.0f));
 
@@ -172,6 +168,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setOnMarkerClickListener(this);
+
+
 
         initDemoGems();
     }
@@ -217,7 +215,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         TextView subTitleText = (TextView) popupView.findViewById(R.id.subTitleText);
 
         gemName.setText(match.getGemName());
-        subTitleText.setText(match.getDescription());
+        String subtitle = match.getQuickDescription() + " - ";
+        if(match.getPrice() != 0){
+            for(int i = 0; i < match.getPrice(); i++)
+                subtitle += "$";
+            subtitle += " - ";
+        }
+        Location gemLoc = new Location("");
+        gemLoc.setLatitude(match.getLocation().latitude);
+        gemLoc.setLongitude(match.getLocation().longitude);
+        float distanceInMeters = currUserLoc.distanceTo(gemLoc);
+        float distanceInMiles = 0.000621371f * distanceInMeters;
+        String distanceString = String.format("%.2f",distanceInMiles);
+        subtitle += distanceString + " mi";
+        subTitleText.setText(subtitle);
 
         // Set position as tag on moreInfoButton
         Button moreInfoButton = (Button) popupView.findViewById(R.id.moreButton);
@@ -274,7 +285,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Ike's Pizza
         GemInformation gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
-                "20 years", category, 38.991090, -76.934092);
+                "20 years", "Casual Pizza", category, 38.991090, -76.934092, 2);
 
         gem.setGemName("Ike's Pizza");
         gem.addReview("Better than my mom's food");
@@ -287,7 +298,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         category = GemInformation.Category.OTHER;
         // McKeldin Library
         gem = new GemInformation(5, "I love the Starbucks inside the footnotes cafe!", "The biggest library on campus with an abundance of helpful resources for optimized performance in school." +
-                " 20 years", category, 38.9859315, -76.9458476);
+                " 20 years", "Campus hub library", category, 38.9859315, -76.9458476, 0);
 
         gem.setGemName("McKeldin Library");
         gem.addReview("They don't accept Starbucks gift cards...");
@@ -318,8 +329,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Location gemLoc = new Location("");
             gemLoc.setLatitude(currGem.getLocation().latitude);
             gemLoc.setLongitude(currGem.getLocation().longitude);
-//            if(currUserLoc.distanceTo(gemLoc) <= 1609.34) // Returns in meters
-                mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
+            if(currUserLoc.distanceTo(gemLoc) <= 1609.34) { // Returns in meters
+                BitmapDescriptor gemIcon = null;
+                switch(currGem.getCategory()){
+                    case RESTAURANT:
+                        gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_ruby);
+                        break;
+                    case HISTORIC:
+                        gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_tallgem);
+                        break;
+                    case ENTERTAINMENT:
+                        gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_fatgem);
+                        break;
+                    case OTHER:
+                        gemIcon = BitmapDescriptorFactory.fromResource(R.drawable.color_diamond);
+                        break;
+                }
+                mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(gemIcon));
+            }
         }
     }
 

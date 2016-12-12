@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -37,7 +38,9 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
     int PLACE_PICKER_REQUEST = 1;
     EditText gemName;
     EditText description;
+    EditText quickDescription;
     RadioGroup category;
+    int price = -1;
 
 
 
@@ -48,6 +51,7 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
         gemName = (EditText)findViewById(R.id.addGemName);
         description = (EditText)findViewById(R.id.addGemDescription);
+        quickDescription = (EditText)findViewById(R.id.addGemQuickDescription);
         category = (RadioGroup)findViewById(R.id.radioGroupType);
 
         TextView title = (TextView)findViewById(R.id.textViewGemTitle);
@@ -112,12 +116,13 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
                 String title = gemName.getText().toString();
                 String descriptionText = description.getText().toString();
+                String quickDescriptionText = quickDescription.getText().toString();
 
                 GemInformation gem = new GemInformation();
 
                 gem.setGemName(title);
                 gem.setDescription(descriptionText);
-
+                gem.setQuickDescription(quickDescriptionText);
 
 
                 if (category.getCheckedRadioButtonId() == R.id.restaurantCheck)
@@ -132,6 +137,8 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
                 gem.setLocation(place.getLatLng().latitude, place.getLatLng().longitude);
 
+                gem.setPrice(price);
+
                 Log.i(TAG, gem.toString());
 
                 result.putExtra("newGem", (Serializable) gem);
@@ -142,11 +149,85 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
         }
     }
 
+    private void getDollarSignViews(ImageView [] signs){
+        signs[0] = (ImageView)findViewById(R.id.dollarSign0);
+        signs[1] = (ImageView)findViewById(R.id.dollarSign1);
+        signs[2] = (ImageView)findViewById(R.id.dollarSign2);
+        signs[3] = (ImageView)findViewById(R.id.dollarSign3);
+        signs[4] = (ImageView)findViewById(R.id.dollarSign4);
+
+    }
+
+    // These methods are called when one of the dollar signs are clicked to
+    // properly change the text, shading, and record the last button clicked
+    public void dollarSign0Clicked(View view){
+        ImageView[] signs = new ImageView[5];
+        getDollarSignViews(signs);
+        price = 0;
+        signs[0].setAlpha(255);
+        signs[1].setAlpha(160);
+        signs[2].setAlpha(160);
+        signs[3].setAlpha(160);
+        signs[4].setAlpha(160);
+        ((TextView)findViewById(R.id.dollarSignText)).setText("...completely free!");
+    }
+
+    public void dollarSign1Clicked(View view){
+        ImageView[] signs = new ImageView[5];
+        getDollarSignViews(signs);
+        price = 1;
+        signs[0].setAlpha(160);
+        signs[1].setAlpha(255);
+        signs[2].setAlpha(160);
+        signs[3].setAlpha(160);
+        signs[4].setAlpha(160);
+        ((TextView)findViewById(R.id.dollarSignText)).setText("...less than $10");
+    }
+
+    public void dollarSign2Clicked(View view){
+        ImageView[] signs = new ImageView[5];
+        getDollarSignViews(signs);
+        price = 2;
+        signs[0].setAlpha(160);
+        signs[1].setAlpha(255);
+        signs[2].setAlpha(255);
+        signs[3].setAlpha(160);
+        signs[4].setAlpha(160);
+        ((TextView)findViewById(R.id.dollarSignText)).setText("...between $10 and $20");
+    }
+
+    public void dollarSign3Clicked(View view){
+        ImageView[] signs = new ImageView[5];
+        getDollarSignViews(signs);
+        price = 3;
+        signs[0].setAlpha(160);
+        signs[1].setAlpha(255);
+        signs[2].setAlpha(255);
+        signs[3].setAlpha(255);
+        signs[4].setAlpha(160);
+        ((TextView)findViewById(R.id.dollarSignText)).setText("...between $20 and $50");
+    }
+
+    public void dollarSign4Clicked(View view){
+        ImageView[] signs = new ImageView[5];
+        getDollarSignViews(signs);
+        price = 4;
+        signs[0].setAlpha(160);
+        signs[1].setAlpha(255);
+        signs[2].setAlpha(255);
+        signs[3].setAlpha(255);
+        signs[4].setAlpha(255);
+        ((TextView)findViewById(R.id.dollarSignText)).setText("...greater than $50");
+    }
+
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 //        if (connectionResult.getErrorMessage()) {
 //            Log.i(TAG, connectionResult.getErrorMessage());
 //        }
     }
+
+
 
 }

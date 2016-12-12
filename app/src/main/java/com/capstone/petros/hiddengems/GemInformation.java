@@ -29,6 +29,8 @@ public class GemInformation implements Serializable {
 //    private Time timeCreated; // To keep track of shiny gems and its expirations
     private Double latitude; // Decided to use LatLng instead of Location because that's what we get back from Places API
     private Double longitude;
+    private String quickDescription; // What kind of place is it - pizza joint, statue, etc...
+    private int price; // How much will going to this gem cost ya?
 
     // Constructor
     public GemInformation() {
@@ -46,7 +48,8 @@ public class GemInformation implements Serializable {
     }
 
     // Constructor to set rating, review, description, category
-    public GemInformation(int rating, String review, String description, Category category, Double latitude, Double longitude) {
+    public GemInformation(int rating, String review, String description, String quickDescription,
+                          Category category, Double latitude, Double longitude, int price) {
         this.rating = rating;
         this.avgRating = rating;
         this.ratingList = new ArrayList<>();
@@ -54,9 +57,11 @@ public class GemInformation implements Serializable {
         this.reviews = new ArrayList<>();
         this.reviews.add(review);
         this.setDescription(description);
+        this.setQuickDescription(quickDescription);
         this.setCategory(category);
         this.latitude = latitude;
         this.longitude = longitude;
+        this.setPrice(price);
     }
 
     // Rating added to arraylist and avg rating recalculated.
@@ -121,6 +126,22 @@ public class GemInformation implements Serializable {
 
     public LatLng getLocation() {
         return new LatLng(latitude,longitude);
+    }
+
+    public String getQuickDescription() {
+        return quickDescription;
+    }
+
+    public void setQuickDescription(String quickDescription) {
+        this.quickDescription = quickDescription;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     @Override
