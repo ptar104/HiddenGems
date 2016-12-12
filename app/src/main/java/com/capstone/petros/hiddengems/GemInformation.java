@@ -78,7 +78,7 @@ public class GemInformation implements Serializable {
 
     // Updates avg rating
     public void updateRating() {
-        avgRating = rating / ratingList.size();
+        avgRating = (double) rating / ratingList.size();
     }
 
     // Getter for avgRating

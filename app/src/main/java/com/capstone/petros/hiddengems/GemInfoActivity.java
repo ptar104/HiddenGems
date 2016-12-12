@@ -164,6 +164,10 @@ public class GemInfoActivity extends AppCompatActivity {
             mAdapter.notifyDataSetChanged();
             Toast.makeText(this, "New review: " + newReview, Toast.LENGTH_SHORT).show();
 
+            // Update rating of gem
+            TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
+            reviewsText.setText(updatedGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+
             // Add review for gem
         }
     }

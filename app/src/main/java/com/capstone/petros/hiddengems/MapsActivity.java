@@ -90,18 +90,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         currUserLoc.setLongitude(-76.934092);
     }
 
-    protected void onStop(){
-        super.onStop();
-        locationManager.removeUpdates(locationListener);
-        locationManager = null;
-    }
+//    protected void onStop(){
+//        super.onStop();
+//        locationManager.removeUpdates(locationListener);
+//        locationManager = null;
+//    }
 
-    protected void onResume() {
-        super.onResume();
-        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
-        // Every 10 seconds, more than 20 meters (Don't want to update too often to help conserve battery)
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000*10, 20, locationListener);
-    }
+//    protected void onResume() {
+//        super.onResume();
+//        locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+//        // Every 10 seconds, more than 20 meters (Don't want to update too often to help conserve battery)
+//        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000*10, 20, locationListener);
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -299,7 +299,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Location gemLoc = new Location("");
             gemLoc.setLatitude(currGem.getLocation().latitude);
             gemLoc.setLongitude(currGem.getLocation().longitude);
-            if(currUserLoc.distanceTo(gemLoc) <= 1609.34) // Returns in meters
+//            if(currUserLoc.distanceTo(gemLoc) <= 1609.34) // Returns in meters
                 mMap.addMarker(new MarkerOptions().position(currGem.getLocation()).title(currGem.getGemName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.gem)));
         }
     }
