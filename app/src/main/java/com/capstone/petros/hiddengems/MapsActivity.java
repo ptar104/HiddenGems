@@ -140,13 +140,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             GemInformation updatedGem = (GemInformation)data.getSerializableExtra("updatedGem");
             int index = 0;
 
-            for (int i = 0; i < gems.size(); i++) {
-                if (updatedGem.getLocation().toString().compareTo(gems.get(i).toString()) == 0) {
-                    index = i;
-                    break;
+            if (updatedGem != null) {
+                for (int i = 0; i < gems.size(); i++) {
+                    if (updatedGem.getLocation().toString().compareTo(gems.get(i).toString()) == 0) {
+                        index = i;
+                        break;
+                    }
                 }
+                gems.add(index, updatedGem);
             }
-            gems.add(index, updatedGem);
 
         } else if (resultCode == RESULT_CANCELED) {
             if (data != null && data.hasExtra("updatedGem")) {
