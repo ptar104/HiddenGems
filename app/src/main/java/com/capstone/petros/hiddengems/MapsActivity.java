@@ -315,21 +315,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.i(TAG, "Initialized Ike's with" +  gem.getLocation());
         this.gems.add(gem);
 
-        category = GemInformation.Category.OTHER;
+        GemInformation gem2 = new GemInformation(5, "A lot of memories!", "Great place for nostalgia!",
+                "Historical Landmark", GemInformation.Category.HISTORIC, 38.991890, -76.93403, 1);
+        gem2.setGemName("CP Monument");
+        gem2.addReview("Fun to play at");
+        gem2.addReview("Brings back memories");
+        gem2.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.monument1));
+        gem2.setBitmap2(BitmapFactory.decodeResource(getResources(), R.drawable.monument2));
+        this.gems.add(gem2);
+
+        GemInformation gem3 = new GemInformation(4, "Great place to dance", "Best place to dance in the area!",
+                "Dance Club", GemInformation.Category.ENTERTAINMENT, 38.991690, -76.93491, 3);
+        gem3.setGemName("Dance NOW!");
+        gem3.addReview("Great place to have fun. Great people.");
+        gem3.addReview("I met my boyfriend here!!");
+        gem3.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.dance1));
+        gem3.setBitmap2(BitmapFactory.decodeResource(getResources(), R.drawable.dance2));
+        this.gems.add(gem3);
+
+
         // McKeldin Library
-        gem = new GemInformation(5, "I love the Starbucks inside the footnotes cafe!", "The biggest library on campus with an abundance of helpful resources for optimized performance in school." +
-                " 20 years", "Campus hub library", category, 38.9859315, -76.9458476, 0);
+        GemInformation gem4 = new GemInformation(5, "I love the Starbucks inside the footnotes cafe!", "The biggest library on campus with an abundance of helpful resources for optimized performance in school." +
+                " 20 years", "Campus hub library", GemInformation.Category.OTHER, 38.991288, -76.9347, 0);
 
-        gem.setGemName("McKeldin Library");
-        gem.addReview("They don't accept Starbucks gift cards...");
-        gem.addReview("2nd floor is too loud to get anything done unless it's a group project");
-        gem.addReview("The 3D printer here is affordable, and they have many regular printers too!");
-        gem.addReview("This place saved me so many times - you can borrow macbook chargers and bike pumps.");
-
-        gem.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.pizza1));
-        gem.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.pizza2));
-
-        this.gems.add(gem);
+        gem4.setGemName("McKeldin Library");
+        gem4.addReview("They don't accept Starbucks gift cards...");
+        gem4.addReview("2nd floor is too loud to get anything done unless it's a group project");
+        gem4.addReview("The 3D printer here is affordable, and they have many regular printers too!");
+        gem4.addReview("This place saved me so many times - you can borrow macbook chargers and bike pumps.");
+        gem4.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.library1));
+        gem4.setBitmap2(BitmapFactory.decodeResource(getResources(), R.drawable.library2));
+        this.gems.add(gem4);
 
         populateGems();
 
