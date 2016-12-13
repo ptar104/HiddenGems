@@ -56,8 +56,8 @@
                 android:layout_weight=".05"/>
 
             <ImageView
-                app:srcCompat="@android:drawable/progress_indeterminate_horizontal"
-                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/nopicture"
+                android:scaleType="centerInside"
                 android:id="@+id/imageView1"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
@@ -69,8 +69,8 @@
                 android:layout_weight=".05"/>
 
             <ImageView
-                app:srcCompat="@android:drawable/progress_indeterminate_horizontal"
-                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/nopicture"
+                android:scaleType="centerInside"
                 android:id="@+id/imageView2"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
@@ -128,26 +128,20 @@
                             android:layout_height="match_parent"
                             android:layout_weight=".2">
 
-                        </RelativeLayout>
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReview1"
+                                app:srcCompat="@drawable/ic_ruby"
+                                android:scaleType="fitCenter"/>
 
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".2">
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".2">
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight=".2">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReviewHalf1"
+                                app:srcCompat="@drawable/ruby_half"
+                                android:scaleType="fitCenter"
+                                android:visibility="gone"/>
 
                         </RelativeLayout>
 
@@ -155,6 +149,87 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight=".2">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReview2"
+                                app:srcCompat="@drawable/ic_ruby"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReviewHalf2"
+                                app:srcCompat="@drawable/ruby_half"
+                                android:scaleType="fitCenter"
+                                android:visibility="gone"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".2">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReview3"
+                                app:srcCompat="@drawable/ic_ruby"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReviewHalf3"
+                                app:srcCompat="@drawable/ruby_half"
+                                android:scaleType="fitCenter"
+                                android:visibility="gone"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".2">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReview4"
+                                app:srcCompat="@drawable/ic_ruby"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReviewHalf4"
+                                app:srcCompat="@drawable/ruby_half"
+                                android:scaleType="fitCenter"
+                                android:visibility="gone"/>
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".2">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReview5"
+                                app:srcCompat="@drawable/ic_ruby"
+                                android:scaleType="fitCenter" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/gemInfoReviewHalf5"
+                                app:srcCompat="@drawable/ruby_half"
+                                android:scaleType="fitCenter"
+                                android:visibility="gone"/>
 
                         </RelativeLayout>
 

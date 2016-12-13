@@ -35,6 +35,9 @@ public class GemInfoActivity extends AppCompatActivity {
     ArrayAdapter mAdapter;
     ArrayList<String> reviews = new ArrayList<String>();
 
+    private static final int GEM_BLUE = Color.argb(255,52,206,251);
+    private static final int GEM_GREY = Color.argb(255,196,196,196);
+
     // Location stuff
     LocationManager locationManager = null;
     LocationListener locationListener;
@@ -86,16 +89,21 @@ public class GemInfoActivity extends AppCompatActivity {
         quickInfo.setText(quickInfoText);
 
         // Set other information.
-        TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
-        reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+        setGemRating();
         TextView description = (TextView)findViewById(R.id.textViewDescription);
         description.setText(currGem.getDescription());
 
         // Set the images.
         ImageView iv1 = (ImageView)findViewById(R.id.imageView1);
-        iv1.setImageBitmap(currGem.getBitmap1());
+        if(currGem.getBitmap1() != null) {
+            iv1.setImageBitmap(currGem.getBitmap1());
+            iv1.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
         ImageView iv2 = (ImageView)findViewById(R.id.imageView2);
-        iv2.setImageBitmap(currGem.getBitmap2());
+        if(currGem.getBitmap2() != null) {
+            iv2.setImageBitmap(currGem.getBitmap2());
+            iv2.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
 
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -207,13 +215,232 @@ public class GemInfoActivity extends AppCompatActivity {
             }
 
             // Update rating of gem
-            TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
-            reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+            setGemRating();
         }
         if (requestCode == RESULT_CANCELED){
             Intent data2 = new Intent();
             setResult(RESULT_CANCELED, data2);
             finish();
+        }
+    }
+
+    public void setGemRating(){
+        double rating = currGem.getRating();
+        ImageView gem1 = (ImageView)findViewById(R.id.gemInfoReview1);
+        ImageView gem2 = (ImageView)findViewById(R.id.gemInfoReview2);
+        ImageView gem3 = (ImageView)findViewById(R.id.gemInfoReview3);
+        ImageView gem4 = (ImageView)findViewById(R.id.gemInfoReview4);
+        ImageView gem5 = (ImageView)findViewById(R.id.gemInfoReview5);
+
+        ImageView gemHalf1 = (ImageView)findViewById(R.id.gemInfoReviewHalf1);
+        ImageView gemHalf2 = (ImageView)findViewById(R.id.gemInfoReviewHalf2);
+        ImageView gemHalf3 = (ImageView)findViewById(R.id.gemInfoReviewHalf3);
+        ImageView gemHalf4 = (ImageView)findViewById(R.id.gemInfoReviewHalf4);
+        ImageView gemHalf5 = (ImageView)findViewById(R.id.gemInfoReviewHalf5);
+
+        if(rating < 0.25){
+            // All grey
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_GREY);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_GREY);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_GREY);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_GREY);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 0.25 && rating < 0.75){
+            // .5 gem
+            gem1.setVisibility(View.GONE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_GREY);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_GREY);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_GREY);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.VISIBLE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 0.75 && rating < 1.25){
+            // 1 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_GREY);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_GREY);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_GREY);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 1.25 && rating < 1.75){
+            // 1.5 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.GONE);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_GREY);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_GREY);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.VISIBLE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 1.75 && rating < 2.25){
+            // 2 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_BLUE);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_GREY);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_GREY);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 2.25 && rating < 2.75){
+            // 2.5 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_BLUE);
+            gem3.setVisibility(View.GONE);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_GREY);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.VISIBLE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 2.75 && rating < 3.25){
+            // 3 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_BLUE);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_BLUE);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_GREY);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 3.25 && rating < 3.75){
+            // 3.5 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_BLUE);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_BLUE);
+            gem4.setVisibility(View.GONE);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.VISIBLE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 3.75 && rating < 4.25){
+            // 4 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_BLUE);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_BLUE);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_BLUE);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_GREY);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
+        }
+        else if(rating >= 4.25 && rating < 4.75){
+            // 4.5 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_BLUE);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_BLUE);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_BLUE);
+            gem5.setVisibility(View.GONE);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.VISIBLE);
+        }
+        else{
+            // 5 gem
+            gem1.setVisibility(View.VISIBLE);
+            gem1.setColorFilter(GEM_BLUE);
+            gem2.setVisibility(View.VISIBLE);
+            gem2.setColorFilter(GEM_BLUE);
+            gem3.setVisibility(View.VISIBLE);
+            gem3.setColorFilter(GEM_BLUE);
+            gem4.setVisibility(View.VISIBLE);
+            gem4.setColorFilter(GEM_BLUE);
+            gem5.setVisibility(View.VISIBLE);
+            gem5.setColorFilter(GEM_BLUE);
+
+            gemHalf1.setVisibility(View.GONE);
+            gemHalf2.setVisibility(View.GONE);
+            gemHalf3.setVisibility(View.GONE);
+            gemHalf4.setVisibility(View.GONE);
+            gemHalf5.setVisibility(View.GONE);
         }
     }
 
