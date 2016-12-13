@@ -20,6 +20,7 @@ import org.w3c.dom.Text;
 
 public class ReviewActivity extends AppCompatActivity {
     int selectedRating = 0; // Default value so it can be distinguished
+    GemInformation currGem;
 
     EditText userReview;
 
@@ -27,6 +28,14 @@ public class ReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+
+        currGem = MapsActivity.getCurrGem();
+        if(currGem == null){
+            Intent data = new Intent();
+            setResult(RESULT_CANCELED, data);
+            finish();
+            return;
+        }
 
         userReview = (EditText)findViewById(R.id.userReview);
 
@@ -43,10 +52,22 @@ public class ReviewActivity extends AppCompatActivity {
         final ImageView gemRating3 = (ImageView)findViewById(R.id.gemRating3);
         final ImageView gemRating4 = (ImageView)findViewById(R.id.gemRating4);
         final ImageView gemRating5 = (ImageView)findViewById(R.id.gemRating5);
+        // Circles
+        final ImageView gemCircle1 = (ImageView)findViewById(R.id.gemCircle1);
+        final ImageView gemCircle2 = (ImageView)findViewById(R.id.gemCircle2);
+        final ImageView gemCircle3 = (ImageView)findViewById(R.id.gemCircle3);
+        final ImageView gemCircle4 = (ImageView)findViewById(R.id.gemCircle4);
+        final ImageView gemCircle5 = (ImageView)findViewById(R.id.gemCircle5);
+
 
         gemRating1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gemCircle1.setVisibility(View.VISIBLE);
+                gemCircle2.setVisibility(View.GONE);
+                gemCircle3.setVisibility(View.GONE);
+                gemCircle4.setVisibility(View.GONE);
+                gemCircle5.setVisibility(View.GONE);
                 selectedRating = 1;
             }
         });
@@ -54,6 +75,11 @@ public class ReviewActivity extends AppCompatActivity {
         gemRating2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gemCircle1.setVisibility(View.GONE);
+                gemCircle2.setVisibility(View.VISIBLE);
+                gemCircle3.setVisibility(View.GONE);
+                gemCircle4.setVisibility(View.GONE);
+                gemCircle5.setVisibility(View.GONE);
                 selectedRating = 2;
             }
         });
@@ -61,6 +87,11 @@ public class ReviewActivity extends AppCompatActivity {
         gemRating3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gemCircle1.setVisibility(View.GONE);
+                gemCircle2.setVisibility(View.GONE);
+                gemCircle3.setVisibility(View.VISIBLE);
+                gemCircle4.setVisibility(View.GONE);
+                gemCircle5.setVisibility(View.GONE);
                 selectedRating = 3;
             }
         });
@@ -68,6 +99,11 @@ public class ReviewActivity extends AppCompatActivity {
         gemRating4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gemCircle1.setVisibility(View.GONE);
+                gemCircle2.setVisibility(View.GONE);
+                gemCircle3.setVisibility(View.GONE);
+                gemCircle4.setVisibility(View.VISIBLE);
+                gemCircle5.setVisibility(View.GONE);
                 selectedRating = 4;
             }
         });
@@ -75,6 +111,11 @@ public class ReviewActivity extends AppCompatActivity {
         gemRating5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gemCircle1.setVisibility(View.GONE);
+                gemCircle2.setVisibility(View.GONE);
+                gemCircle3.setVisibility(View.GONE);
+                gemCircle4.setVisibility(View.GONE);
+                gemCircle5.setVisibility(View.VISIBLE);
                 selectedRating = 5;
             }
         });

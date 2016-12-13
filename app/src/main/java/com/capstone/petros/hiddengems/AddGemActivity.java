@@ -52,6 +52,7 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
     EditText quickDescription;
     RadioGroup category;
     int price = -1;
+    boolean bitmap1Changed = false, bitmap2Changed = false;
 
 
 
@@ -158,8 +159,14 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
                 gem.setPrice(price);
 
                 // Getting the bitmaps from the image views
-                gem.setBitmap1(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage1)).getDrawable())).getBitmap());
-                gem.setBitmap2(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage2)).getDrawable())).getBitmap());
+                //TODO: Set if not changed to defaults
+                if(bitmap1Changed)
+                    gem.setBitmap1(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage1)).getDrawable())).getBitmap());
+                else gem.setBitmap1(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage1)).getDrawable())).getBitmap());
+                if(bitmap2Changed)
+                    gem.setBitmap2(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage2)).getDrawable())).getBitmap());
+                else gem.setBitmap2(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage2)).getDrawable())).getBitmap());
+
 
                 Log.i(TAG, gem.toString());
 
@@ -179,14 +186,20 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
                 ImageView imageView = null;
-                if(requestCode == RESULT_LOAD_IMAGE_ONE)
+                if(requestCode == RESULT_LOAD_IMAGE_ONE) {
                     imageView = (ImageView) findViewById(R.id.newGemImage1);
-                else imageView = (ImageView) findViewById(R.id.newGemImage2);
+                    bitmap1Changed = true;
+                }
+                else {
+                    imageView = (ImageView) findViewById(R.id.newGemImage2);
+                    bitmap2Changed = true;
+                }
 
                 // destroy the drawing cache to ensure that when a new image is loaded, its cached
                 imageView.destroyDrawingCache();
                 imageView.setImageBitmap(bitmap);
                 imageView.setDrawingCacheEnabled(true);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -209,11 +222,11 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
         ImageView[] signs = new ImageView[5];
         getDollarSignViews(signs);
         price = 0;
-        signs[0].setAlpha(255);
-        signs[1].setAlpha(160);
-        signs[2].setAlpha(160);
-        signs[3].setAlpha(160);
-        signs[4].setAlpha(160);
+        signs[0].setAlpha(1.0f);
+        signs[1].setImageResource(R.drawable.greydollar);
+        signs[2].setImageResource(R.drawable.greydollar);
+        signs[3].setImageResource(R.drawable.greydollar);
+        signs[4].setImageResource(R.drawable.greydollar);
         ((TextView)findViewById(R.id.dollarSignText)).setText("...completely free!");
     }
 
@@ -221,11 +234,11 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
         ImageView[] signs = new ImageView[5];
         getDollarSignViews(signs);
         price = 1;
-        signs[0].setAlpha(160);
-        signs[1].setAlpha(255);
-        signs[2].setAlpha(160);
-        signs[3].setAlpha(160);
-        signs[4].setAlpha(160);
+        signs[0].setAlpha(.5f);
+        signs[1].setImageResource(R.drawable.bluedollar);
+        signs[2].setImageResource(R.drawable.greydollar);
+        signs[3].setImageResource(R.drawable.greydollar);
+        signs[4].setImageResource(R.drawable.greydollar);
         ((TextView)findViewById(R.id.dollarSignText)).setText("...less than $10");
     }
 
@@ -233,11 +246,11 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
         ImageView[] signs = new ImageView[5];
         getDollarSignViews(signs);
         price = 2;
-        signs[0].setAlpha(160);
-        signs[1].setAlpha(255);
-        signs[2].setAlpha(255);
-        signs[3].setAlpha(160);
-        signs[4].setAlpha(160);
+        signs[0].setAlpha(.5f);
+        signs[1].setImageResource(R.drawable.bluedollar);
+        signs[2].setImageResource(R.drawable.bluedollar);
+        signs[3].setImageResource(R.drawable.greydollar);
+        signs[4].setImageResource(R.drawable.greydollar);
         ((TextView)findViewById(R.id.dollarSignText)).setText("...between $10 and $20");
     }
 
@@ -245,11 +258,11 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
         ImageView[] signs = new ImageView[5];
         getDollarSignViews(signs);
         price = 3;
-        signs[0].setAlpha(160);
-        signs[1].setAlpha(255);
-        signs[2].setAlpha(255);
-        signs[3].setAlpha(255);
-        signs[4].setAlpha(160);
+        signs[0].setAlpha(.5f);
+        signs[1].setImageResource(R.drawable.bluedollar);
+        signs[2].setImageResource(R.drawable.bluedollar);
+        signs[3].setImageResource(R.drawable.bluedollar);
+        signs[4].setImageResource(R.drawable.greydollar);
         ((TextView)findViewById(R.id.dollarSignText)).setText("...between $20 and $50");
     }
 
@@ -257,11 +270,11 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
         ImageView[] signs = new ImageView[5];
         getDollarSignViews(signs);
         price = 4;
-        signs[0].setAlpha(160);
-        signs[1].setAlpha(255);
-        signs[2].setAlpha(255);
-        signs[3].setAlpha(255);
-        signs[4].setAlpha(255);
+        signs[0].setAlpha(.5f);
+        signs[1].setImageResource(R.drawable.bluedollar);
+        signs[2].setImageResource(R.drawable.bluedollar);
+        signs[3].setImageResource(R.drawable.bluedollar);
+        signs[4].setImageResource(R.drawable.bluedollar);
         ((TextView)findViewById(R.id.dollarSignText)).setText("...greater than $50");
     }
 

@@ -60,8 +60,8 @@
                 android:layout_weight=".05"/>
 
             <ImageView
-                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/taptoadd"
+                android:scaleType="centerInside"
                 android:id="@+id/newGemImage1"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
@@ -76,8 +76,8 @@
                 android:layout_weight=".05"/>
 
             <ImageView
-                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
-                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/taptoadd"
+                android:scaleType="centerInside"
                 android:id="@+id/newGemImage2"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
@@ -252,6 +252,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textMultiLine"
+                android:gravity="top|left"
                 android:ems="10"
                 android:id="@+id/addGemDescription"
                 android:background="@android:color/darker_gray"
@@ -284,61 +285,65 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.7">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".5">
+                    android:orientation="horizontal"
+                    android:layout_weight=".5"
+                    android:paddingLeft="10dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:paddingLeft="10dp"
+                        android:scaleType="centerInside"
                         android:id="@+id/dollarSign0"
                         android:clickable="true"
-                        android:onClick="dollarSign0Clicked"/>
+                        android:onClick="dollarSign0Clicked"
+                        app:srcCompat="@drawable/nodollar"
+                        android:alpha=".5"
+                        android:layout_weight=".2"/>
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:layout_toRightOf="@+id/dollarSign0"
-                        android:paddingLeft="10dp"
+                        android:scaleType="centerInside"
                         android:id="@+id/dollarSign1"
                         android:clickable="true"
-                        android:onClick="dollarSign1Clicked"/>
+                        android:onClick="dollarSign1Clicked"
+                        app:srcCompat="@drawable/bluedollar"
+                        android:layout_weight=".2" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:layout_toRightOf="@+id/dollarSign1"
-                        android:paddingLeft="10dp"
+                        android:scaleType="centerInside"
                         android:id="@+id/dollarSign2"
                         android:clickable="true"
-                        android:onClick="dollarSign2Clicked"/>
+                        android:onClick="dollarSign2Clicked"
+                        app:srcCompat="@drawable/greydollar"
+                        android:layout_weight=".2" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:layout_toRightOf="@+id/dollarSign2"
-                        android:paddingLeft="10dp"
+                        android:scaleType="centerInside"
                         android:id="@+id/dollarSign3"
                         android:clickable="true"
-                        android:onClick="dollarSign3Clicked"/>
+                        android:onClick="dollarSign3Clicked"
+                        app:srcCompat="@drawable/greydollar"
+                        android:layout_weight=".2" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:scaleType="center"
-                        android:layout_toRightOf="@+id/dollarSign3"
-                        android:paddingLeft="10dp"
+                        android:scaleType="centerInside"
                         android:id="@+id/dollarSign4"
                         android:clickable="true"
-                        android:onClick="dollarSign4Clicked"/>
+                        android:onClick="dollarSign4Clicked"
+                        app:srcCompat="@drawable/greydollar"
+                        android:layout_weight=".2"/>
 
-                </RelativeLayout>
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="0dp"

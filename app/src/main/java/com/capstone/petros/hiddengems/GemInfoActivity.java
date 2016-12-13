@@ -52,6 +52,13 @@ public class GemInfoActivity extends AppCompatActivity {
         currGem = MapsActivity.getCurrGem();
         //currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
 
+        if(currGem == null){
+            Intent data = new Intent();
+            setResult(RESULT_CANCELED, data);
+            finish();
+            return;
+        }
+
         // Populate reviews
         if (currGem.getReviews().size() > 0) {
             reviews.addAll(currGem.getReviews());
@@ -202,6 +209,11 @@ public class GemInfoActivity extends AppCompatActivity {
             // Update rating of gem
             TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
             reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+        }
+        if (requestCode == RESULT_CANCELED){
+            Intent data2 = new Intent();
+            setResult(RESULT_CANCELED, data2);
+            finish();
         }
     }
 
