@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -48,7 +49,8 @@ public class GemInfoActivity extends AppCompatActivity {
         reviewsList.setAdapter(mAdapter);
 
         // Initialize currGem reference
-        currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
+        currGem = MapsActivity.getCurrGem();
+        //currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
 
         // Populate reviews
         if (currGem.getReviews().size() > 0) {
@@ -65,6 +67,7 @@ public class GemInfoActivity extends AppCompatActivity {
         Typeface type = Typeface.createFromAsset(getAssets(),"fonts/Lato-Semibold.ttf");
         title.setTypeface(type);
 
+        // Set the quick info
         TextView quickInfo = (TextView)findViewById(R.id.textViewQuickInfo);
         String quickInfoText = currGem.getQuickDescription() + " - ";
         if(currGem.getPrice() != 0){
@@ -74,6 +77,18 @@ public class GemInfoActivity extends AppCompatActivity {
         }
         quickInfoText += "[Getting Location...] mi"; //Until the location callback gets the location
         quickInfo.setText(quickInfoText);
+
+        // Set other information.
+        TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
+        reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
+        TextView description = (TextView)findViewById(R.id.textViewDescription);
+        description.setText(currGem.getDescription());
+
+        // Set the images.
+        ImageView iv1 = (ImageView)findViewById(R.id.imageView1);
+        iv1.setImageBitmap(currGem.getBitmap1());
+        ImageView iv2 = (ImageView)findViewById(R.id.imageView2);
+        iv2.setImageBitmap(currGem.getBitmap2());
 
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
@@ -99,12 +114,6 @@ public class GemInfoActivity extends AppCompatActivity {
             public void onProviderDisabled(String provider) {}
         };
 
-
-        TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
-        reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
-        TextView description = (TextView)findViewById(R.id.textViewDescription);
-        description.setText(currGem.getDescription());
-
         final ImageButton backButton = (ImageButton)findViewById(R.id.detailsBackButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +135,8 @@ public class GemInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GemInfoActivity.this, ReviewActivity.class);
-                intent.putExtra("currGem", currGem);
+                // Getting gem from MapsActivity instead of passing it around.
+                //intent.putExtra("currGem", currGem);
                 startActivityForResult(intent, CREATE_REVIEW);
             }
         });
@@ -174,7 +184,8 @@ public class GemInfoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CREATE_REVIEW && resultCode == RESULT_OK) {
-            currGem = (GemInformation)data.getSerializableExtra("updatedGem");
+            // Edited directly...
+            //currGem = (GemInformation)data.getSerializableExtra("updatedGem");
 
             int numReviews = currGem.getReviews().size();
             int oldNumReviews = reviews.size(); // If they don't type anything, still add the gem number
@@ -188,8 +199,6 @@ public class GemInfoActivity extends AppCompatActivity {
                 Toast.makeText(this, "Review accepted", Toast.LENGTH_SHORT).show();
             }
 
-
-
             // Update rating of gem
             TextView reviewsText = (TextView)findViewById(R.id.textViewNumberOfGems);
             reviewsText.setText(currGem.getRating()+" gems / 5 gems"); // TODO: Update with images.
@@ -199,7 +208,8 @@ public class GemInfoActivity extends AppCompatActivity {
     // Menu back or regular back button pressed
     public void returnWithUpdatedGem() {
         Intent data = new Intent();
-        data.putExtra("updatedGem", (Serializable) currGem); // May be null, will be checked in MapsActivity
+        // Getting gem from MapsActivity instead of passing it around.
+        //data.putExtra("updatedGem", (Serializable) currGem); // May be null, will be checked in MapsActivity
         setResult(RESULT_OK, data);
         finish();
     }

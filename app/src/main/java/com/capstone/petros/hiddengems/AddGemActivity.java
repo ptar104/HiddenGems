@@ -1,10 +1,18 @@
 package com.capstone.petros.hiddengems;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Parcelable;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,6 +36,7 @@ import com.google.android.gms.location.places.ui.PlacePicker;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -36,6 +45,8 @@ import static android.R.attr.type;
 public class AddGemActivity extends AppCompatActivity implements OnConnectionFailedListener {
     private String TAG = "AddGemActivity";
     int PLACE_PICKER_REQUEST = 1;
+    private static int RESULT_LOAD_IMAGE_ONE = 88;
+    private static int RESULT_LOAD_IMAGE_TWO = 89;
     EditText gemName;
     EditText description;
     EditText quickDescription;
@@ -146,13 +157,40 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 
                 gem.setPrice(price);
 
+                // Getting the bitmaps from the image views
+                gem.setBitmap1(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage1)).getDrawable())).getBitmap());
+                gem.setBitmap2(((BitmapDrawable)(((ImageView)findViewById(R.id.newGemImage2)).getDrawable())).getBitmap());
+
                 Log.i(TAG, gem.toString());
 
-                result.putExtra("newGem", (Serializable) gem);
+                // Getting gem from MapsActivity instead of passing it around.
+                //result.putExtra("newGem", (Serializable) gem);
+                MapsActivity.setCurrGem(gem);
 
                 setResult(RESULT_OK, result);
                 finish();
             }
+        }
+        // This code taken from Jon Froehlich's ImpressionistPainter skeleton. All credit goes to him.
+        if ((requestCode == RESULT_LOAD_IMAGE_ONE || requestCode == RESULT_LOAD_IMAGE_TWO)
+                && resultCode == RESULT_OK && null != data) {
+            Uri imageUri = data.getData();
+
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                ImageView imageView = null;
+                if(requestCode == RESULT_LOAD_IMAGE_ONE)
+                    imageView = (ImageView) findViewById(R.id.newGemImage1);
+                else imageView = (ImageView) findViewById(R.id.newGemImage2);
+
+                // destroy the drawing cache to ensure that when a new image is loaded, its cached
+                imageView.destroyDrawingCache();
+                imageView.setImageBitmap(bitmap);
+                imageView.setDrawingCacheEnabled(true);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -235,6 +273,58 @@ public class AddGemActivity extends AppCompatActivity implements OnConnectionFai
 //        }
     }
 
+    // NOTE: The following 2 functions taken from Jon Froehlich's ImpressionistPainter
+    // skeleton. All credit goes to him.
+
+    // Storage Permissions
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    /**
+     * Checks if the app has permission to write to device storage
+     *
+     * If the app does not has permission then the user will be prompted to grant permissions
+     *
+     * From: http://stackoverflow.com/a/33292700
+     * @param activity
+     */
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            // For API 23+ you need to request the read/write permissions even if they are already in your manifest.
+            // See: http://developer.android.com/training/permissions/requesting.html
+            ActivityCompat.requestPermissions(
+                    activity,
+                    PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE
+            );
+        }
+    }
+
+    /**
+     * Loads an image from the Gallery into the ImageView
+     *
+     * @param v
+     */
+    public void gemImageClicked(View v){
+        // Without this call, the app was crashing in the onActivityResult method when trying to read from file system
+        verifyStoragePermissions(this);
+
+        Intent i = new Intent(
+                Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        ImageView iv = (ImageView)v;
+        if(iv.getId() == R.id.newGemImage1)
+            startActivityForResult(i, RESULT_LOAD_IMAGE_ONE);
+        else startActivityForResult(i, RESULT_LOAD_IMAGE_TWO);
+    }
 
 
 }

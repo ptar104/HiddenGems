@@ -1,6 +1,7 @@
 package com.capstone.petros.hiddengems;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -43,6 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     PopupWindow _popupWindow;
     PopupWindow _keyWindow;
     ArrayList<GemInformation> gems = new ArrayList<GemInformation>(); // Temporary datastore for all gems - not persistent
+    static GemInformation currGem;
 
     // Location stuff
     LocationManager locationManager = null;
@@ -120,12 +122,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        // NOTE: since I(Peter) added bitmaps to GemInformation, it is no longer
+        // serializable, as bitmaps are not serializable by default.
+        // Instead, I am using the static "currGem" field to pass the gem around.
+        // And activity can get and set the currGem, and this can be used to edit the gem
+        // in question directly in the functions, and pass a gem around.
+
+        // I am commenting out, not deleting, the "Intent Extra" code, in case we need it later.
+
         if (requestCode == CREATE_GEM && resultCode == RESULT_OK) {
             // Notify data changed, update map
-            GemInformation newGem = (GemInformation)data.getSerializableExtra("newGem");
-            LatLng newGemLocation = newGem.getLocation();
+            //GemInformation newGem = (GemInformation)data.getSerializableExtra("newGem");
+            LatLng newGemLocation = currGem.getLocation();
 
-            this.gems.add(newGem);
+            this.gems.add(currGem);
 
             populateGems(); // TODO: shiny gems
             mMap.moveCamera(CameraUpdateFactory.newLatLng(newGemLocation));
@@ -133,6 +143,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Save review of gem after added.
         } else if (requestCode == REVIEW_ADDED && resultCode == RESULT_OK) {
+            // If the gem was updated, it would be changed directly now.
+            /*
             GemInformation updatedGem = (GemInformation)data.getSerializableExtra("updatedGem");
             int index = 0;
 
@@ -145,12 +157,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
                 gems.add(index, updatedGem);
             }
-
+            */
         } else if (resultCode == RESULT_CANCELED) {
+            // See above...
+            /*
             if (data != null && data.hasExtra("updatedGem")) {
                 // TODO: update gem
                 GemInformation gem = (GemInformation) data.getSerializableExtra("updatedGem");
             }
+            */
         }
     }
 
@@ -254,7 +269,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         _popupWindow.dismiss();
 
         if (match != null) {
-            intent.putExtra("currGem", match);
+            //intent.putExtra("currGem", match);
+            setCurrGem(match);
             startActivityForResult(intent, REVIEW_ADDED);
         }
 
@@ -292,6 +308,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         gem.addReview("You HAVE to check out this place.");
         gem.addReview("#tbt Napoli");
 
+        gem.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.pizza1));
+        gem.setBitmap2(BitmapFactory.decodeResource(getResources(), R.drawable.pizza2));
+
         Log.i(TAG, "Initialized Ike's with" +  gem.getLocation());
         this.gems.add(gem);
 
@@ -306,16 +325,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         gem.addReview("The 3D printer here is affordable, and they have many regular printers too!");
         gem.addReview("This place saved me so many times - you can borrow macbook chargers and bike pumps.");
 
+        gem.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.pizza1));
+        gem.setBitmap1(BitmapFactory.decodeResource(getResources(), R.drawable.pizza2));
 
         this.gems.add(gem);
-        // Target Express
-//        gem = new GemInformation(4, "Yummy!", "Ike's pizza has been a standby in DC for over " +
-//                "20 years", categories, 38.991090, -76.934092);
-//
-//        gem.setGemName("Ike's Pizza");
-//        gem.addReview("Better than my mom's food");
-//        gem.addReview("You HAVE to check out this place.");
-//        gem.addReview("#tbt Napoli");
 
         populateGems();
 
@@ -350,7 +363,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    public static void setCurrGem(GemInformation gem){
+        currGem = gem;
+    }
 
+    public static GemInformation getCurrGem(){
+        return currGem;
+    }
 
 
 }

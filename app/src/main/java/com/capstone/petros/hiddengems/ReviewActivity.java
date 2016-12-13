@@ -99,7 +99,9 @@ public class ReviewActivity extends AppCompatActivity {
                 }
 
                 // Fetch current gem object
-                GemInformation currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
+                // Getting gem from MapsActivity instead of passing it around.
+                //GemInformation currGem = (GemInformation)getIntent().getSerializableExtra("currGem");
+                GemInformation currGem = MapsActivity.getCurrGem();
 
                 // Update existing gem
                 currGem.addRating(selectedRating);
@@ -109,7 +111,7 @@ public class ReviewActivity extends AppCompatActivity {
 
                 // Prepare result
                 Intent data = new Intent();
-                data.putExtra("updatedGem", currGem);
+                //data.putExtra("updatedGem", currGem);
                 setResult(RESULT_OK, data);
                 finish();
             }

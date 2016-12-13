@@ -60,12 +60,14 @@
                 android:layout_weight=".05"/>
 
             <ImageView
-                app:srcCompat="@drawable/pizza1"
-                android:scaleType="center"
-                android:id="@+id/imageView4"
+                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+                android:scaleType="centerCrop"
+                android:id="@+id/newGemImage1"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight=".425"
+                android:clickable="true"
+                android:onClick="gemImageClicked"
                 />
 
             <Space
@@ -74,12 +76,14 @@
                 android:layout_weight=".05"/>
 
             <ImageView
-                app:srcCompat="@drawable/pizza2"
-                android:scaleType="center"
-                android:id="@+id/imageView3"
+                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
+                android:scaleType="centerCrop"
+                android:id="@+id/newGemImage2"
                 android:layout_height="match_parent"
                 android:layout_width="0dp"
                 android:layout_weight=".425"
+                android:clickable="true"
+                android:onClick="gemImageClicked"
                 />
 
             <Space

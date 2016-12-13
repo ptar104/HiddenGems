@@ -1,5 +1,6 @@
 package com.capstone.petros.hiddengems;
 
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.text.format.Time;
 
@@ -31,6 +32,9 @@ public class GemInformation implements Serializable {
     private Double longitude;
     private String quickDescription; // What kind of place is it - pizza joint, statue, etc...
     private int price; // How much will going to this gem cost ya?
+
+    private Bitmap bitmap1; // The two images
+    private Bitmap bitmap2;
 
     // Constructor
     public GemInformation() {
@@ -142,6 +146,22 @@ public class GemInformation implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public Bitmap getBitmap1() {
+        return bitmap1;
+    }
+
+    public void setBitmap1(Bitmap bitmap1) {
+        this.bitmap1 = bitmap1;
+    }
+
+    public Bitmap getBitmap2() {
+        return bitmap2;
+    }
+
+    public void setBitmap2(Bitmap bitmap2) {
+        this.bitmap2 = bitmap2;
     }
 
     @Override
