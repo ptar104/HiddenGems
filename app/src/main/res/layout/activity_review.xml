@@ -78,7 +78,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/gem1"
+                        app:srcCompat="@drawable/ic_ruby"
+                        android:tint="#c4c4c4"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:id="@+id/gemRating1" />
@@ -108,7 +109,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/gem2"
+                        app:srcCompat="@drawable/ic_ruby"
+                        android:tint="#a3cad5"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:id="@+id/gemRating2" />
@@ -137,7 +139,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/gem3"
+                        app:srcCompat="@drawable/ic_ruby"
+                        android:tint="#76c0d6"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:id="@+id/gemRating3" />
@@ -166,7 +169,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/gem4"
+                        app:srcCompat="@drawable/ic_ruby"
+                        android:tint="#56c7e8"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:id="@+id/gemRating4" />
@@ -196,7 +200,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/gem5"
+                        app:srcCompat="@drawable/ic_ruby"
+                        android:tint="#34cefb"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
                         android:id="@+id/gemRating5" />
