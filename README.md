@@ -19,3 +19,5 @@ When building the project, we referenced:
 Jon Froehlich's Impressionist Skeleton code - http://cmsc434-f16.wikispaces.com/Android+II+Impressionist
 
 Google's tutorials on the Google Maps API - https://developers.google.com/maps/documentation/android-api/
+
+Example for creating a PopupWindow - http://android-er.blogspot.com/2012/03/example-of-using-popupwindow.html
